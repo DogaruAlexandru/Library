@@ -19,9 +19,9 @@ namespace DataMapper.SqlServerDao
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<BookDomain> BookDomains { get; set; }
-        public virtual DbSet<Borrowed> Borroweds { get; set; }
+        public virtual DbSet<BorrowedBook> BorrowedBooks { get; set; }
         public virtual DbSet<Edition> Editions { get; set; }
-        public virtual DbSet<People> Peoples { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
 
     }
 }

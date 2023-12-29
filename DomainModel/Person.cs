@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace DomainModel
 {
-    public enum PeopleType
+    public enum PersonType
     {
         Reader,
         LibraryPersonnel
     }
 
-    public partial class People
+    public partial class Person
     {
         public int Id { get; set; }
 
@@ -41,8 +41,8 @@ namespace DomainModel
         public string Address { get; set; }
 
         [Required(ErrorMessage = "The Type cannot be null")]
-        [EnumDataType(typeof(PeopleType))]
-        public PeopleType Type { get; set; }
+        [EnumDataType(typeof(PersonType))]
+        public PersonType Type { get; set; }
 
         [Required(ErrorMessage = "At least one of EmailAddress or PhoneNumber should not be null")]
         public bool IsEmailOrPhoneNumberProvided => !string.IsNullOrEmpty(EmailAddress) || !string.IsNullOrEmpty(PhoneNumber);

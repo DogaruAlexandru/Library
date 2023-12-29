@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DomainModel
 {
-    public partial class Borrowed
+    public partial class BorrowedBook
     {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "The Reader cannot be null")]
-        public People Reader { get; set; }
+        public Person Reader { get; set; }
 
         [Required(ErrorMessage = "The Edition cannot be null")]
         public Edition Edition { get; set; }

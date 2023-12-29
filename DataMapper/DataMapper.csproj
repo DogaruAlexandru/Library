@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlClient, Version=4.6.1.5, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SqlClient.4.8.5\lib\net461\System.Data.SqlClient.dll</HintPath>
@@ -54,7 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="IAuthorDataService.cs" />
+    <Compile Include="IBookDataService.cs" />
+    <Compile Include="IBookDomainDataService.cs" />
+    <Compile Include="IBorrowedBookDataService.cs" />
+    <Compile Include="IEditionsDataService.cs" />
+    <Compile Include="IPersonDataService.cs" />
     <Compile Include="Migrations\202312051646342_initial_commit.cs" />
     <Compile Include="Migrations\202312051646342_initial_commit.designer.cs">
       <DependentUpon>202312051646342_initial_commit.cs</DependentUpon>
@@ -67,8 +73,21 @@
     <Compile Include="Migrations\202312281839120_Update1.designer.cs">
       <DependentUpon>202312281839120_Update1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312292149459_Update2.cs" />
+    <Compile Include="Migrations\202312292149459_Update2.designer.cs">
+      <DependentUpon>202312292149459_Update2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DAOFactoryMethod.cs" />
+    <Compile Include="IDAOFactory.cs" />
+    <Compile Include="SqlServerDao\SQLAuthorDataService.cs" />
+    <Compile Include="SqlServerDao\SQLBookDataService.cs" />
+    <Compile Include="SqlServerDao\SQLBookDomainDataService.cs" />
+    <Compile Include="SqlServerDao\SQLBorrowedBookDataService.cs" />
+    <Compile Include="SqlServerDao\SQLEditionDataService.cs" />
+    <Compile Include="SqlServerDao\SQLPersonDataService.cs" />
+    <Compile Include="SqlServerDao\SQLServerDAOFactory.cs" />
     <Compile Include="SqlServerDao\MyApplicationContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312281839120_Update1.resx">
       <DependentUpon>202312281839120_Update1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312292149459_Update2.resx">
+      <DependentUpon>202312292149459_Update2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

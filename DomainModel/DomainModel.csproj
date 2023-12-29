@@ -57,8 +57,8 @@
     <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="BookDomain.cs" />
-    <Compile Include="Borrowed.cs" />
-    <Compile Include="People.cs" />
+    <Compile Include="BorrowedBook.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Edition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

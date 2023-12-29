@@ -8,18 +8,30 @@ namespace DataMapper.SqlServerDao
 {
     public interface IDAOFactory
     {
-        ///// <summary>Gets the customer data services.</summary>
-        ///// <value>The customer data services.</value>
-        //ICustomerDataServices CustomerDataServices
-        //{
-        //    get;
-        //}
+        IAuthorDataService AuthorDataService
+        {
+            get;
+        }
+        IBookDataService BookDataService
+        {
+            get;
+        }
+        IBookDomainDataService BookDomainDataService
+        {
+            get;
+        }
+        IBorrowedBookDataService BorrowedBookDataService
+        {
+            get;
+        }
+        IEditionDataService EditionDataService
+        {
+            get;
+        }
+        IPersonDataService PersonDataService
+        {
+            get;
+        }
 
-        ///// <summary>Gets the produc data services.</summary>
-        ///// <value>The produc data services.</value>
-        //IProductDataServices ProducDataServices
-        //{
-        //    get;
-        //}
     }
 }
