@@ -13,10 +13,10 @@ namespace DataMapper
 
         Book GetBookById(int id);
 
-        void AddBook(Book Book);
+        void AddBook(Book book);
 
-        void DeleteBook(Book Book);
+        void DeleteBook(Book book);
 
-        void UpdateBook(Book Book);
+        void UpdateBook(Book book);
     }
 }

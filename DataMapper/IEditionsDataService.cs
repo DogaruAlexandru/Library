@@ -13,10 +13,10 @@ namespace DataMapper
 
         Edition GetEditionById(int id);
 
-        void AddEdition(Edition Edition);
+        void AddEdition(Edition edition);
 
-        void DeleteEdition(Edition Edition);
+        void DeleteEdition(Edition edition);
 
-        void UpdateEdition(Edition Edition);
+        void UpdateEdition(Edition edition);
     }
 }

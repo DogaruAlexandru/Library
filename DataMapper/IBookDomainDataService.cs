@@ -13,10 +13,10 @@ namespace DataMapper
 
         BookDomain GetBookDomainById(int id);
 
-        void AddBookDomain(BookDomain BookDomain);
+        void AddBookDomain(BookDomain bookDomain);
 
-        void DeleteBookDomain(BookDomain BookDomain);
+        void DeleteBookDomain(BookDomain bookDomain);
 
-        void UpdateBookDomain(BookDomain BookDomain);
+        void UpdateBookDomain(BookDomain bookDomain);
     }
 }

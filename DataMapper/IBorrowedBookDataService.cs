@@ -13,10 +13,10 @@ namespace DataMapper
 
         BorrowedBook GetBorrowedBookById(int id);
 
-        void AddBorrowedBook(BorrowedBook BorrowedBook);
+        void AddBorrowedBook(BorrowedBook borrowedBook);
 
-        void DeleteBorrowedBook(BorrowedBook BorrowedBook);
+        void DeleteBorrowedBook(BorrowedBook borrowedBook);
 
-        void UpdateBorrowedBook(BorrowedBook BorrowedBook);
+        void UpdateBorrowedBook(BorrowedBook borrowedBook);
     }
 }

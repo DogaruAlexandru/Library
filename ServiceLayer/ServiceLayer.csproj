@@ -44,11 +44,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="IAuthorService.cs" />
+    <Compile Include="IBookDomainService.cs" />
+    <Compile Include="IBookService.cs" />
+    <Compile Include="IBorrowedBookService.cs" />
+    <Compile Include="IEditionService.cs" />
+    <Compile Include="IPersonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceImplementation\AuthorServicesImplementation.cs" />
+    <Compile Include="ServiceImplementation\BookDomainServicesImplementation.cs" />
+    <Compile Include="ServiceImplementation\BookServicesImplementation.cs" />
+    <Compile Include="ServiceImplementation\BorrowedBookServicesImplementation.cs" />
+    <Compile Include="ServiceImplementation\EditionServiceImplementation.cs" />
+    <Compile Include="ServiceImplementation\PersonServiceImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataMapper\DataMapper.csproj">
+      <Project>{F39A4334-2ADC-492D-A436-10E3266C1BD8}</Project>
+      <Name>DataMapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{D8E04D66-CAF8-4722-A54C-D9057182F123}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

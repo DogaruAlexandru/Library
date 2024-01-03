@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataMapper
+namespace ServiceLayer
 {
-    public interface IAuthorDataService
+    public interface IAuthorService
     {
         IList<Author> GetAllAuthors();
 

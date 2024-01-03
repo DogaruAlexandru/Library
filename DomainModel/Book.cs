@@ -22,6 +22,7 @@ namespace DomainModel
         public virtual ICollection<Edition> Editions { get; set; }
 
         [Required(ErrorMessage = "The BookDomain cannot be null")]
+        [MinLength(1, ErrorMessage = "At least one BookDomain is required")]
         public virtual ICollection<BookDomain> BookDomains { get; set; }
 
         [Required(ErrorMessage = "The Authors cannot be null")]
