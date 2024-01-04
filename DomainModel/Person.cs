@@ -17,7 +17,7 @@ namespace DomainModel
     {
         public int Id { get; set; }
 
-        [StringLength(13)]
+        [RegularExpression(@"^\d{13}$", ErrorMessage = "CNP must be exactly 13 digits")]
         public string CNP { get; set; }
 
         [Required(ErrorMessage = "The FirstName cannot be null")]
@@ -44,7 +44,8 @@ namespace DomainModel
         [EnumDataType(typeof(PersonType))]
         public PersonType Type { get; set; }
 
-        [Required(ErrorMessage = "At least one of EmailAddress or PhoneNumber should not be null")]
+        [Required]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "At least one of EmailAddress or PhoneNumber should not be null")]
         public bool IsEmailOrPhoneNumberProvided => !string.IsNullOrEmpty(EmailAddress) || !string.IsNullOrEmpty(PhoneNumber);
 
     }

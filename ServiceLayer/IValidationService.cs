@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public interface IBookService : IValidationService
+    public interface IValidationService
     {
+        void ValidateEntity<T>(T entity);
     }
 }

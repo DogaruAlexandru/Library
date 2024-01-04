@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public interface IEditionService
+    public interface IEditionService : IValidationService
     {
     }
 }

@@ -2,13 +2,15 @@
 using DomainModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServiceLayer.ServiceImplementation
 {
-    public class AuthorServicesImplementation : IAuthorService
+    public class AuthorServicesImplementation : BaseService, IAuthorService
     {
         public void AddAuthor(Author author)
         {
+            ValidateEntity(author);
             DAOFactoryMethod.CurrentDAOFactory.AuthorDataService.AddAuthor(author);
         }
 
@@ -29,6 +31,7 @@ namespace ServiceLayer.ServiceImplementation
 
         public void UpdateAuthor(Author author)
         {
+            ValidateEntity(author);
             DAOFactoryMethod.CurrentDAOFactory.AuthorDataService.UpdateAuthor(author);
         }
     }

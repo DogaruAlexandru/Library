@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public interface IAuthorService
+    public interface IAuthorService : IValidationService
     {
         IList<Author> GetAllAuthors();
 
@@ -18,5 +18,6 @@ namespace ServiceLayer
         void DeleteAuthor(Author author);
 
         void UpdateAuthor(Author author);
+
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public interface IBorrowedBookService
+    public interface IBorrowedBookService : IValidationService
     {
     }
 }

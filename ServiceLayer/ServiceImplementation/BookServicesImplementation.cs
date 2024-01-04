@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ServiceImplementation
 {
-    public class BookServicesImplementation : IBookService
+    public class BookServicesImplementation : BaseService, IBookService
     {
     }
 }

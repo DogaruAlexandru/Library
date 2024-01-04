@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ServiceImplementation
 {
-    public class EditionServiceImplementation : IEditionService
+    public class EditionServiceImplementation : BaseService, IEditionService
     {
     }
 }

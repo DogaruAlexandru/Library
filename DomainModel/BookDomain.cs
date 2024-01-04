@@ -15,7 +15,6 @@ namespace DomainModel
         [StringLength(100, MinimumLength = 1, ErrorMessage = "The length must be between 1 and 100")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "The ParentDomain cannot be null")]
         public BookDomain ParentDomain { get; set; }
 
         [Required(ErrorMessage = "The Books cannot be null")]
