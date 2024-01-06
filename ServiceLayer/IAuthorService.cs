@@ -18,6 +18,5 @@ namespace ServiceLayer
         void DeleteAuthor(Author author);
 
         void UpdateAuthor(Author author);
-
     }
 }

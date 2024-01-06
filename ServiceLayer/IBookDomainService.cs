@@ -18,6 +18,5 @@ namespace ServiceLayer
         void DeleteBookDomain(BookDomain bookDomain);
 
         void UpdateBookDomain(BookDomain bookDomain);
-
     }
 }

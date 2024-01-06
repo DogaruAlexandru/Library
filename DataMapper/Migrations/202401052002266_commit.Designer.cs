@@ -7,13 +7,13 @@ namespace DataMapper.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Update3 : IMigrationMetadata
+    public sealed partial class commit : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Update3));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(commit));
         
         string IMigrationMetadata.Id
         {
-            get { return "202401041552583_Update3"; }
+            get { return "202401052002266_commit"; }
         }
         
         string IMigrationMetadata.Source

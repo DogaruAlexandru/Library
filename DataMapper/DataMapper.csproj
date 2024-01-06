@@ -61,25 +61,21 @@
     <Compile Include="IBorrowedBookDataService.cs" />
     <Compile Include="IEditionsDataService.cs" />
     <Compile Include="IPersonDataService.cs" />
-    <Compile Include="Migrations\202312051646342_initial_commit.cs" />
-    <Compile Include="Migrations\202312051646342_initial_commit.designer.cs">
-      <DependentUpon>202312051646342_initial_commit.cs</DependentUpon>
+    <Compile Include="Migrations\202401052002266_commit.cs" />
+    <Compile Include="Migrations\202401052002266_commit.designer.cs">
+      <DependentUpon>202401052002266_commit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312281827035_Update.cs" />
-    <Compile Include="Migrations\202312281827035_Update.designer.cs">
-      <DependentUpon>202312281827035_Update.cs</DependentUpon>
+    <Compile Include="Migrations\202401052047280_Update.cs" />
+    <Compile Include="Migrations\202401052047280_Update.designer.cs">
+      <DependentUpon>202401052047280_Update.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312281839120_Update1.cs" />
-    <Compile Include="Migrations\202312281839120_Update1.designer.cs">
-      <DependentUpon>202312281839120_Update1.cs</DependentUpon>
+    <Compile Include="Migrations\202401061214290_Update1.cs" />
+    <Compile Include="Migrations\202401061214290_Update1.designer.cs">
+      <DependentUpon>202401061214290_Update1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312292149459_Update2.cs" />
-    <Compile Include="Migrations\202312292149459_Update2.designer.cs">
-      <DependentUpon>202312292149459_Update2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401041552583_Update3.cs" />
-    <Compile Include="Migrations\202401041552583_Update3.designer.cs">
-      <DependentUpon>202401041552583_Update3.cs</DependentUpon>
+    <Compile Include="Migrations\202401061226458_Update2.cs" />
+    <Compile Include="Migrations\202401061226458_Update2.designer.cs">
+      <DependentUpon>202401061226458_Update2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,20 +101,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202312051646342_initial_commit.resx">
-      <DependentUpon>202312051646342_initial_commit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401052002266_commit.resx">
+      <DependentUpon>202401052002266_commit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312281827035_Update.resx">
-      <DependentUpon>202312281827035_Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401052047280_Update.resx">
+      <DependentUpon>202401052047280_Update.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312281839120_Update1.resx">
-      <DependentUpon>202312281839120_Update1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401061214290_Update1.resx">
+      <DependentUpon>202401061214290_Update1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312292149459_Update2.resx">
-      <DependentUpon>202312292149459_Update2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401041552583_Update3.resx">
-      <DependentUpon>202401041552583_Update3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401061226458_Update2.resx">
+      <DependentUpon>202401061226458_Update2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

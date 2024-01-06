@@ -51,5 +51,72 @@ namespace DataMapper
                 context.SaveChanges();
             }
         }
+
+        public int CountBorrowedBooksByEditionWithNullReturnedDate(Edition edition)
+        {
+            using (var context = new MyApplicationContext())
+            {
+                return context.BorrowedBooks
+                    .Count(b => b.Edition.Id == edition.Id && b.ReturnedDate == null);
+            }
+        }
+
+        public int CountBorrowedBooksByPersonAndDate(Person person, DateTime date)
+        {
+            using (var context = new MyApplicationContext())
+            {
+                return context.BorrowedBooks
+                    .Count(b => b.Reader.Id == person.Id && b.BorrowDate > date);
+            }
+        }
+
+        public int CountBorrowedBooksForPersonAndDomainAfterDate(Person person, BookDomain bookDomain, DateTime date)
+        {
+            using (var context = new MyApplicationContext())
+            {
+                return context.BorrowedBooks
+                    .Count(b => b.Edition.Book.BookDomains.Any(bd => bd.Id == bookDomain.Id)
+                        && b.BorrowDate > date
+                        && b.Reader.Id == person.Id);
+            }
+        }
+
+        public List<int> GetDueDateDifferencesForPersonAfterDate(Person person, DateTime date)
+        {
+            using (var context = new MyApplicationContext())
+            {
+                return context.BorrowedBooks
+                    .Where(b => b.Reader.Id == person.Id && b.BorrowDate > date)
+                    .Select(b => (b.DueDate - b.BorrowDate).Days)
+                    .ToList();
+            }
+        }
+
+        public int CountBorrowedBooksByEditionForPersonAfterDate(Person person, Edition edition, DateTime date)
+        {
+            using (var context = new MyApplicationContext())
+            {
+                return context.BorrowedBooks
+                    .Count(b => b.Reader.Id == person.Id && b.Edition.Id == edition.Id && b.BorrowDate > date);
+            }
+        }
+
+        public int CountBooksBorrowedByPersonOnDate(Person person, DateTime date)
+        {
+            using (var context = new MyApplicationContext())
+            {
+                return context.BorrowedBooks
+                    .Count(b => b.Reader.Id == person.Id && b.BorrowDate.Date == date.Date);
+            }
+        }
+
+        public int CountBooksBorrowedBySuffOnDate(Person person, DateTime date)
+        {
+            using (var context = new MyApplicationContext())
+            {
+                return context.BorrowedBooks
+                    .Count(b => b.Staff.Id == person.Id && b.BorrowDate.Date == date.Date);
+            }
+        }
     }
 }

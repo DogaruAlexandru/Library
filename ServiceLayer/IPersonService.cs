@@ -18,6 +18,5 @@ namespace ServiceLayer
         void DeletePerson(Person person);
 
         void UpdatePerson(Person person);
-
     }
 }

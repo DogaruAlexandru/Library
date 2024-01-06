@@ -13,7 +13,7 @@ namespace DataMapper.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202312292149459_Update2"; }
+            get { return "202401061226458_Update2"; }
         }
         
         string IMigrationMetadata.Source

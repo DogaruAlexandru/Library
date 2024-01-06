@@ -1,11 +1,5 @@
 ﻿using DomainModel;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataMapper.SqlServerDao
 {
@@ -23,5 +17,21 @@ namespace DataMapper.SqlServerDao
         public virtual DbSet<Edition> Editions { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BorrowedBook>()
+                .HasRequired(b => b.Reader)
+                .WithMany()
+                .HasForeignKey(b => b.ReaderId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BorrowedBook>()
+                .HasRequired(b => b.Staff)
+                .WithMany()
+                .HasForeignKey(b => b.StaffId)
+                .WillCascadeOnDelete(false);
+        }
     }
 }

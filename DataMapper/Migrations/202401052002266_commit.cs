@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial_commit : DbMigration
+    public partial class commit : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,7 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -21,8 +21,8 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        Description = c.String(),
+                        Title = c.String(nullable: false, maxLength: 100),
+                        Description = c.String(maxLength: 100),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -31,7 +31,7 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
                         ParentDomain_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -44,8 +44,8 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Type = c.Int(nullable: false),
-                        Name = c.String(),
-                        Publisher = c.String(),
+                        Name = c.String(nullable: false, maxLength: 100),
+                        Publisher = c.String(nullable: false, maxLength: 100),
                         Book_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -53,19 +53,19 @@
                 .Index(t => t.Book_Id);
             
             CreateTable(
-                "dbo.Borroweds",
+                "dbo.BorrowedBooks",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         BorrowDate = c.DateTime(nullable: false),
                         DueDate = c.DateTime(nullable: false),
                         ReturnedDate = c.DateTime(nullable: false),
-                        Edition_Id = c.Int(),
-                        Reader_Id = c.Int(),
+                        Edition_Id = c.Int(nullable: false),
+                        Reader_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Editions", t => t.Edition_Id)
-                .ForeignKey("dbo.People", t => t.Reader_Id)
+                .ForeignKey("dbo.Editions", t => t.Edition_Id, cascadeDelete: true)
+                .ForeignKey("dbo.People", t => t.Reader_Id, cascadeDelete: true)
                 .Index(t => t.Edition_Id)
                 .Index(t => t.Reader_Id);
             
@@ -74,12 +74,12 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        SocialId = c.String(),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        EmailAddress = c.String(),
-                        PhoneNumber = c.String(),
-                        Address = c.String(),
+                        CNP = c.String(),
+                        FirstName = c.String(nullable: false, maxLength: 100),
+                        LastName = c.String(nullable: false, maxLength: 100),
+                        EmailAddress = c.String(maxLength: 100),
+                        PhoneNumber = c.String(maxLength: 20),
+                        Address = c.String(nullable: false, maxLength: 200),
                         Type = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -114,8 +114,8 @@
         
         public override void Down()
         {
-            DropForeignKey("dbo.Borroweds", "Reader_Id", "dbo.People");
-            DropForeignKey("dbo.Borroweds", "Edition_Id", "dbo.Editions");
+            DropForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People");
+            DropForeignKey("dbo.BorrowedBooks", "Edition_Id", "dbo.Editions");
             DropForeignKey("dbo.Editions", "Book_Id", "dbo.Books");
             DropForeignKey("dbo.BookDomains", "ParentDomain_Id", "dbo.BookDomains");
             DropForeignKey("dbo.BookDomainBooks", "Book_Id", "dbo.Books");
@@ -126,14 +126,14 @@
             DropIndex("dbo.BookDomainBooks", new[] { "BookDomain_Id" });
             DropIndex("dbo.BookAuthors", new[] { "Author_Id" });
             DropIndex("dbo.BookAuthors", new[] { "Book_Id" });
-            DropIndex("dbo.Borroweds", new[] { "Reader_Id" });
-            DropIndex("dbo.Borroweds", new[] { "Edition_Id" });
+            DropIndex("dbo.BorrowedBooks", new[] { "Reader_Id" });
+            DropIndex("dbo.BorrowedBooks", new[] { "Edition_Id" });
             DropIndex("dbo.Editions", new[] { "Book_Id" });
             DropIndex("dbo.BookDomains", new[] { "ParentDomain_Id" });
             DropTable("dbo.BookDomainBooks");
             DropTable("dbo.BookAuthors");
             DropTable("dbo.People");
-            DropTable("dbo.Borroweds");
+            DropTable("dbo.BorrowedBooks");
             DropTable("dbo.Editions");
             DropTable("dbo.BookDomains");
             DropTable("dbo.Books");

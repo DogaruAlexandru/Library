@@ -43,5 +43,8 @@ namespace DomainModel
         [Required(ErrorMessage = "The CanBorrow cannot be null")]
         public uint CanBorrow { get; set; }
 
+        [Required(ErrorMessage = "The Book cannot be null")]
+        public Book Book { get; set; }
+
     }
 }
