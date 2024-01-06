@@ -1,5 +1,6 @@
 ﻿using DataMapper;
 using DomainModel;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,30 +13,44 @@ namespace ServiceLayer.ServiceImplementation
 {
     public class BookServicesImplementation : BaseService, IBookService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
+
         public void AddBook(Book book)
         {
             ValidateEntity(book);
+            
+            log.Info($"Adding Book with ID: {book.Id}");
+
             DAOFactoryMethod.CurrentDAOFactory.BookDataService.AddBook(book);
         }
 
         public void DeleteBook(Book book)
         {
+            log.Debug($"Deleting Book with ID: {book.Id}");
+
             DAOFactoryMethod.CurrentDAOFactory.BookDataService.DeleteBook(book);
         }
 
         public IList<Book> GetAllBooks()
         {
+            log.Debug("Getting all Books.");
+
             return DAOFactoryMethod.CurrentDAOFactory.BookDataService.GetAllBooks();
         }
 
         public Book GetBookById(int id)
         {
+            log.Debug($"Getting Book with ID: {id}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BookDataService.GetBookById(id);
         }
 
         public void UpdateBook(Book book)
         {
             ValidateEntity(book);
+
+            log.Info($"Updating Book with ID: {book.Id}");
+
             DAOFactoryMethod.CurrentDAOFactory.BookDataService.UpdateBook(book);
         }
 

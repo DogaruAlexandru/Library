@@ -1,6 +1,7 @@
 ﻿using DataMapper;
 using DataMapper.SqlServerDao;
 using DomainModel;
+using log4net;
 using ServiceLayer;
 using ServiceLayer.ServiceImplementation;
 using System;
@@ -16,37 +17,24 @@ namespace Library
 {
     internal class MyConsoleApplication
     {
+        //private static readonly ILog log = LogManager.GetLogger(typeof(MyConsoleApplication));
         static void Main(string[] args)
         {
             var context = new MyApplicationContext();
 
-            //IAuthorService service = new AuthorServicesImplementation();
-
-            //foreach (var item in service.GetAllAuthors())
+            //BookDomain bookInstance = new BookDomain
             //{
-            //    Console.WriteLine(item.Name);
-            //}
-
-            //IBookDomainService service1 = new BookDomainServicesImplementation();
-
-            //foreach (var item in service1.GetAllBookDomains())
-            //{
-            //    Console.WriteLine(item.Name);
-            //}
-
-            //Author myAuthor = new Author
-            //{
-            //    Name = "Jane Doe",
-            //    Books = new List<Book>()
-
+            //    Name = "Stiinta",
+            //    ParentDomain = null,  // You may set the ParentDomain if needed
+            //    Books = new List<Book>()  // Initialize the Books collection
             //};
 
-            //IAuthorService service = new AuthorServicesImplementation();
-            //service.AddAuthor(myAuthor);
-
             //IBookDomainService service = new BookDomainServicesImplementation();
-            //BookDomain bookDomain = service.GetBookDomainById(1);
-            //Console.WriteLine(bookDomain);
+            //service.AddBookDomain(bookInstance);
+
+            //log.Info("Button pressed.");
+            //log.Info("Button pressed.");
+
         }
     }
 }

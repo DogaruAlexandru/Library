@@ -1,0 +1,5 @@
+2024-01-06 23:09:16,486 [1] INFO  Library.MyConsoleApplication [(null)] – Button pressed.
+2024-01-06 23:09:16,503 [1] INFO  Library.MyConsoleApplication [(null)] – Button pressed.
+2024-01-06 23:15:00,523 [1] INFO  Library.MyConsoleApplication [(null)] – Button pressed.
+2024-01-06 23:15:00,538 [1] INFO  Library.MyConsoleApplication [(null)] – Button pressed.
+2024-01-06 23:32:09,364 [1] INFO  ServiceLayer.ServiceImplementation.BookDomainServicesImplementation [(null)] – asdsadasdasd.

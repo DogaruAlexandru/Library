@@ -17,6 +17,7 @@ namespace DomainModel
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "The CNP cannot be null")]
         [RegularExpression(@"^\d{13}$", ErrorMessage = "CNP must be exactly 13 digits")]
         public string CNP { get; set; }
 

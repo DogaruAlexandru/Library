@@ -1,5 +1,6 @@
 ﻿using DataMapper;
 using DomainModel;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,37 +13,53 @@ namespace ServiceLayer.ServiceImplementation
 {
     public class BorrowedBookServicesImplementation : BaseService, IBorrowedBookService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
+
         public const int BorrowPeriodDays = 14;
 
         public void AddBorrowedBook(BorrowedBook borrowedBook)
         {
             ValidateEntity(borrowedBook);
+
+            log.Info($"Adding BorrowedBook with ID: {borrowedBook.Id}");
+
             DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.AddBorrowedBook(borrowedBook);
         }
 
         public void DeleteBorrowedBook(BorrowedBook borrowedBook)
         {
+            log.Debug($"Deleting BorrowedBook with ID: {borrowedBook.Id}");
+
             DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.DeleteBorrowedBook(borrowedBook);
         }
 
         public IList<BorrowedBook> GetAllBorrowedBooks()
         {
+            log.Debug("Getting all BorrowedBooks.");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.GetAllBorrowedBooks();
         }
 
         public BorrowedBook GetBorrowedBookById(int id)
         {
+            log.Debug($"Getting BorrowedBook with ID: {id}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.GetBorrowedBookById(id);
         }
 
         public void UpdateBorrowedBook(BorrowedBook borrowedBook)
         {
             ValidateEntity(borrowedBook);
+
+            log.Info($"Updating BorrowedBook with ID: {borrowedBook.Id}");
+
             DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.UpdateBorrowedBook(borrowedBook);
         }
 
         public bool CanBorrowMoreBooks(Edition edition)
         {
+            log.Debug($"Verifing Edition can be borrowed with ID: {edition.Id}");
+
             int borrowedBooksCount = DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
                 .CountBorrowedBooksByEditionWithNullReturnedDate(edition);
 
@@ -51,35 +68,47 @@ namespace ServiceLayer.ServiceImplementation
 
         public int CountBorrowedSinceDateForPerson(Person person, DateTime date)
         {
+            log.Debug($"Counting borrowed books for Person with ID {person.Id} since {date.ToShortDateString()}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.CountBorrowedBooksByPersonAndDate(person, date);
         }
 
         public int CountBorrowedBooksForPersonAndDomainAfterDate(Person person, BookDomain bookDomain, DateTime date)
         {
+            log.Debug($"Counting borrowed books for Person with ID {person.Id}, BookDomain with ID {bookDomain.Id} after {date.ToShortDateString()}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
                 .CountBorrowedBooksForPersonAndDomainAfterDate(person, bookDomain, date);
         }
 
         public List<int> GetDueDateDifferencesForPersonAfterDate(Person person, DateTime date)
         {
+            log.Debug($"Getting due date differences for Person with ID {person.Id} after {date.ToShortDateString()}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
                 .GetDueDateDifferencesForPersonAfterDate(person, date);
         }
 
         public int CountBorrowedBooksByEditionForPersonAfterDate(Person person, Edition edition, DateTime date)
         {
+            log.Debug($"Counting borrowed books for Person with ID {person.Id}, Edition with ID {edition.Id} after {date.ToShortDateString()}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
                 .CountBorrowedBooksByEditionForPersonAfterDate(person, edition, date);
         }
 
         public int CountBooksBorrowedByPersonOnDate(Person person, DateTime date)
         {
+            log.Debug($"Counting books borrowed by Person with ID {person.Id} on {date.ToShortDateString()}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
                 .CountBooksBorrowedByPersonOnDate(person, date);
         }
 
         public int CountBooksBorrowedBySuffOnDate(Person person, DateTime date)
         {
+            log.Debug($"Counting books borrowed by Person with ID {person.Id} with 'Suff' attribute on {date.ToShortDateString()}");
+
             return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
                 .CountBooksBorrowedBySuffOnDate(person, date);
         }
@@ -88,6 +117,8 @@ namespace ServiceLayer.ServiceImplementation
         public void BorrowMultipleBook(List<BorrowedBook> borrowedBooks)
         {
             ValidateMultipleBorrow(borrowedBooks);
+
+            log.Info($"Adding multiple BorrowedBooks");
 
             int i = 0;
             try
@@ -111,6 +142,8 @@ namespace ServiceLayer.ServiceImplementation
         #region Validations_borrowedBooks
         private void ValidateMultipleBorrow(List<BorrowedBook> borrowedBooks)
         {
+            log.Debug($"Validating BorrowedBooks list for addition");
+
             if (borrowedBooks != null && borrowedBooks.Count > 0)
             {
                 VerifyTooManyBorrowedArOnce(borrowedBooks);
