@@ -1,32 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Book.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace DomainModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    /// <summary>
+    /// Represents a book in the domain model.
+    /// </summary>
     public partial class Book
     {
+        /// <summary>
+        /// Gets or sets the unique identifier of the book.
+        /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Gets or sets the title of the book.
+        /// </summary>
         [Required(ErrorMessage = "The Title cannot be null")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "The length must be between 1 and 100")]
         public string Title { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the description of the book.
+        /// </summary>
         [StringLength(100, MinimumLength = 1, ErrorMessage = "The length must be between 1 and 100")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "The Editions cannot be null")]
+        /// <summary>
+        /// Gets or sets the collection of editions associated with the book.
+        /// </summary>
+        [Required(ErrorMessage = "The Editions collection cannot be null")]
         public virtual ICollection<Edition> Editions { get; set; }
 
-        [Required(ErrorMessage = "The BookDomain cannot be null")]
+        /// <summary>
+        /// Gets or sets the collection of domains associated with the book.
+        /// </summary>
+        [Required(ErrorMessage = "The BookDomains collection cannot be null")]
         [MinLength(1, ErrorMessage = "At least one BookDomain is required")]
         public virtual ICollection<BookDomain> BookDomains { get; set; }
 
-        [Required(ErrorMessage = "The Authors cannot be null")]
+        /// <summary>
+        /// Gets or sets the collection of authors who wrote the book.
+        /// </summary>
+        [Required(ErrorMessage = "The Authors collection cannot be null")]
         public virtual ICollection<Author> Authors { get; set; }
-
     }
 }
