@@ -1,9 +1,22 @@
-﻿using DataMapper.SqlServerDao;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SQLServerDAOFactory.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace DataMapper
 {
-    class SQLServerDAOFactory : IDAOFactory
+    using DataMapper.SqlServerDao;
+
+    /// <summary>
+    /// Represents the SQL Server implementation of the Data Access Object (DAO) Factory.
+    /// </summary>
+    internal class SQLServerDAOFactory : IDAOFactory
     {
+        /// <summary>
+        /// Gets the data service for Author entities.
+        /// </summary>
+        /// <returns>The data service for Author entities.</returns>
         public IAuthorDataService AuthorDataService
         {
             get
@@ -12,6 +25,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Gets the data service for Book entities.
+        /// </summary>
+        /// <returns>The data service for Book entities.</returns>
         public IBookDataService BookDataService
         {
             get
@@ -20,6 +37,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Gets the data service for BookDomain entities.
+        /// </summary>
+        /// <returns>The data service for BookDomain entities.</returns>
         public IBookDomainDataService BookDomainDataService
         {
             get
@@ -28,6 +49,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Gets the data service for BorrowedBook entities.
+        /// </summary>
+        /// <returns>The data service for BorrowedBook entities.</returns>
         public IBorrowedBookDataService BorrowedBookDataService
         {
             get
@@ -36,6 +61,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Gets the data service for Edition entities.
+        /// </summary>
+        /// <returns>The data service for Edition entities.</returns>
         public IEditionDataService EditionDataService
         {
             get
@@ -44,6 +73,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Gets the data service for Person entities.
+        /// </summary>
+        /// <returns>The data service for Person entities.</returns>
         public IPersonDataService PersonDataService
         {
             get

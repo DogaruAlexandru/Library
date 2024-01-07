@@ -1,14 +1,27 @@
-﻿using DataMapper.SqlServerDao;
-using DomainModel;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SQLAuthorDataService.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace DataMapper
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using DataMapper.SqlServerDao;
+    using DomainModel;
+
+    /// <summary>
+    /// Represents the SQL implementation of the data service for the Author entity.
+    /// </summary>
     internal class SQLAuthorDataService : IAuthorDataService
     {
+        /// <summary>
+        /// Adds a new author to the database.
+        /// </summary>
+        /// <param name="author">The author to be added.</param>
         public void AddAuthor(Author author)
         {
             using (var context = new MyApplicationContext())
@@ -18,6 +31,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Deletes an author from the database.
+        /// </summary>
+        /// <param name="author">The author to be deleted.</param>
         public void DeleteAuthor(Author author)
         {
             using (var context = new MyApplicationContext())
@@ -27,6 +44,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Retrieves all authors from the database.
+        /// </summary>
+        /// <returns>A list of all authors.</returns>
         public IList<Author> GetAllAuthors()
         {
             using (var context = new MyApplicationContext())
@@ -35,6 +56,11 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Retrieves an author by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the author to retrieve.</param>
+        /// <returns>The author with the specified ID.</returns>
         public Author GetAuthorById(int id)
         {
             using (var context = new MyApplicationContext())
@@ -43,6 +69,10 @@ namespace DataMapper
             }
         }
 
+        /// <summary>
+        /// Updates an existing author in the database.
+        /// </summary>
+        /// <param name="author">The author to be updated.</param>
         public void UpdateAuthor(Author author)
         {
             using (var context = new MyApplicationContext())
