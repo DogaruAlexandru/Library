@@ -23,7 +23,7 @@ namespace TestDomainModel
         /// Validates that the <see cref="Author.Id"/> property is set correctly.
         /// </summary>
         [TestMethod]
-        public void Author_ValidateId_Success()
+        public void AuthorValidateIdSuccess()
         {
             // Arrange
             var author = new Author
@@ -46,7 +46,7 @@ namespace TestDomainModel
         /// Validates that the <see cref="Author.Name"/> property within the valid length range passes validation.
         /// </summary>
         [TestMethod]
-        public void Author_ValidateNameLength_Success()
+        public void AuthorValidateNameLengthSuccess()
         {
             // Arrange
             var author = new Author
@@ -68,7 +68,7 @@ namespace TestDomainModel
         /// Validates that the <see cref="Author.Name"/> property fails validation for a too short name.
         /// </summary>
         [TestMethod]
-        public void Author_ValidateNameLength_TooShort_Failure()
+        public void AuthorValidateNameLengthTooShortFailure()
         {
             // Arrange
             var author = new Author
@@ -93,7 +93,7 @@ namespace TestDomainModel
         /// Validates that the <see cref="Author.Name"/> property fails validation for a too long name.
         /// </summary>
         [TestMethod]
-        public void Author_ValidateNameLength_TooLong_Failure()
+        public void AuthorValidateNameLengthTooLongFailure()
         {
             // Arrange
             var author = new Author
@@ -118,7 +118,7 @@ namespace TestDomainModel
         /// Validates that the <see cref="Author.Books"/> property within the valid length range passes validation.
         /// </summary>
         [TestMethod]
-        public void Author_ValidateBooksNotNull_Success()
+        public void AuthorValidateBooksNotNullSuccess()
         {
             // Arrange
             var author = new Author
@@ -140,7 +140,7 @@ namespace TestDomainModel
         /// Validates that the <see cref="Author.Books"/> property fails validation for a null Books collection.
         /// </summary>
         [TestMethod]
-        public void Author_ValidateBooksNotNull_Failure()
+        public void AuthorValidateBooksNotNullFailure()
         {
             // Arrange
             var author = new Author
