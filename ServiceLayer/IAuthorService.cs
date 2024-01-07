@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IAuthorService.cs" company="Your Company">
-//   Copyright (c) Your Company. All rights reserved.
+// <copyright file="IAuthorService.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 

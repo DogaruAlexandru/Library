@@ -1,20 +1,34 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BaseService.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ServiceLayer.ServiceImplementation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using log4net;
+
+    /// <summary>
+    /// Represents a base service class providing common functionality for service implementations.
+    /// </summary>
     public abstract class BaseService : IValidationService
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
+        /// <summary>
+        /// Represents the logger instance for the <see cref="BaseService"/> class.
+        /// </summary>
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
+        /// <summary>
+        /// Validates the specified entity using Data Annotations.
+        /// </summary>
+        /// <typeparam name="T">The type of entity to be validated.</typeparam>
+        /// <param name="entity">The entity to be validated.</param>
         public virtual void ValidateEntity<T>(T entity)
         {
-            log.Debug($"Validating entity type: {typeof(T)}");
+            Log.Debug($"Validating entity type: {typeof(T)}");
 
             var validationContext = new ValidationContext(entity, serviceProvider: null, items: null);
             var validationResults = new List<ValidationResult>();
@@ -22,10 +36,14 @@ namespace ServiceLayer.ServiceImplementation
 
             if (!isValid)
             {
-                HandleValidationErrors(validationResults);
+                this.HandleValidationErrors(validationResults);
             }
         }
 
+        /// <summary>
+        /// Handles validation errors by throwing a <see cref="ValidationException"/>.
+        /// </summary>
+        /// <param name="validationResults">The list of validation results.</param>
         protected virtual void HandleValidationErrors(List<ValidationResult> validationResults)
         {
             foreach (var validationResult in validationResults)

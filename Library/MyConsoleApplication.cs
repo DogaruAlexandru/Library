@@ -1,40 +1,26 @@
-﻿using DataMapper;
-using DataMapper.SqlServerDao;
-using DomainModel;
-using log4net;
-using ServiceLayer;
-using ServiceLayer.ServiceImplementation;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MyConsoleApplication.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Library
 {
+    using System;
+    using DataMapper.SqlServerDao;
+
+    /// <summary>
+    /// Represents the main console application.
+    /// </summary>
     internal class MyConsoleApplication
     {
-        //private static readonly ILog log = LogManager.GetLogger(typeof(MyConsoleApplication));
-        static void Main(string[] args)
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        /// <param name="args">The command-line arguments.</param>
+        public static void Main(string[] args)
         {
             var context = new MyApplicationContext();
-
-            //BookDomain bookInstance = new BookDomain
-            //{
-            //    Name = "Stiinta",
-            //    ParentDomain = null,  // You may set the ParentDomain if needed
-            //    Books = new List<Book>()  // Initialize the Books collection
-            //};
-
-            //IBookDomainService service = new BookDomainServicesImplementation();
-            //service.AddBookDomain(bookInstance);
-
-            //log.Info("Button pressed.");
-            //log.Info("Button pressed.");
-
         }
     }
 }

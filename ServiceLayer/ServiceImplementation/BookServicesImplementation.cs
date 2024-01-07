@@ -1,78 +1,118 @@
-﻿using DataMapper;
-using DomainModel;
-using log4net;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BookServicesImplementation.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ServiceLayer.ServiceImplementation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Configuration;
+    using System.Linq;
+    using DataMapper;
+    using DomainModel;
+    using log4net;
+
+    /// <summary>
+    /// Represents the implementation of the service for managing Book entities.
+    /// </summary>
     public class BookServicesImplementation : BaseService, IBookService
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
+        /// <summary>
+        /// The logger instance for this class.
+        /// </summary>
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
+        /// <summary>
+        /// Adds a new book to the system.
+        /// </summary>
+        /// <param name="book">The book to be added.</param>
         public void AddBook(Book book)
         {
-            ValidateEntity(book);
-            
-            log.Info($"Adding Book with ID: {book.Id}");
+            this.ValidateEntity(book);
+
+            Log.Info($"Adding Book with ID: {book.Id}");
 
             DAOFactoryMethod.CurrentDAOFactory.BookDataService.AddBook(book);
         }
 
+        /// <summary>
+        /// Deletes a book from the system.
+        /// </summary>
+        /// <param name="book">The book to be deleted.</param>
         public void DeleteBook(Book book)
         {
-            log.Debug($"Deleting Book with ID: {book.Id}");
+            Log.Debug($"Deleting Book with ID: {book.Id}");
 
             DAOFactoryMethod.CurrentDAOFactory.BookDataService.DeleteBook(book);
         }
 
+        /// <summary>
+        /// Gets all books in the system.
+        /// </summary>
+        /// <returns>A list of all books.</returns>
         public IList<Book> GetAllBooks()
         {
-            log.Debug("Getting all Books.");
+            Log.Debug("Getting all Books.");
 
             return DAOFactoryMethod.CurrentDAOFactory.BookDataService.GetAllBooks();
         }
 
+        /// <summary>
+        /// Gets a specific book by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the book to retrieve.</param>
+        /// <returns>The book with the specified ID.</returns>
         public Book GetBookById(int id)
         {
-            log.Debug($"Getting Book with ID: {id}");
+            Log.Debug($"Getting Book with ID: {id}");
 
             return DAOFactoryMethod.CurrentDAOFactory.BookDataService.GetBookById(id);
         }
 
+        /// <summary>
+        /// Updates an existing book in the system.
+        /// </summary>
+        /// <param name="book">The book to be updated.</param>
         public void UpdateBook(Book book)
         {
-            ValidateEntity(book);
+            this.ValidateEntity(book);
 
-            log.Info($"Updating Book with ID: {book.Id}");
+            Log.Info($"Updating Book with ID: {book.Id}");
 
             DAOFactoryMethod.CurrentDAOFactory.BookDataService.UpdateBook(book);
         }
 
+        /// <inheritdoc/>
         public override void ValidateEntity<T>(T entity)
         {
             base.ValidateEntity(entity);
 
             Book book = entity as Book;
 
-            VerifyDifferentDomainRoots(book);
-            VerifyLessBookDomainsThenMax(book);
+            this.VerifyDifferentDomainRoots(book);
+            this.VerifyLessBookDomainsThenMax(book);
         }
 
+        /// <summary>
+        /// Verifies that the book has a maximum number of allowed book domains.
+        /// </summary>
+        /// <param name="book">The book to be validated.</param>
         private void VerifyLessBookDomainsThenMax(Book book)
         {
             int maxDomainCount = Convert.ToInt32(ConfigurationManager.AppSettings["DOMENII"]);
             if (book.BookDomains.Count() > maxDomainCount)
             {
-                throw new ValidationException($"A Book cannot have more then {maxDomainCount} BookDomains");
+                throw new ValidationException($"A Book cannot have more than {maxDomainCount} BookDomains");
             }
         }
 
+        /// <summary>
+        /// Verifies that the book domains have different root domains.
+        /// </summary>
+        /// <param name="book">The book to be validated.</param>
         private void VerifyDifferentDomainRoots(Book book)
         {
             IBookDomainService service = new BookDomainServicesImplementation();
@@ -85,8 +125,10 @@ namespace ServiceLayer.ServiceImplementation
                 {
                     aux = service.GetBookDomainById(aux.ParentDomain.Id);
                 }
+
                 domainsRoots.Add(aux.Id);
             }
+
             var groupedByValue = domainsRoots.GroupBy(i => i);
             var duplicates = groupedByValue.Where(g => g.Count() > 1).Select(g => g.Key).ToList();
             if (duplicates.Any())
