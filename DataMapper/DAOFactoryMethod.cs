@@ -1,48 +1,61 @@
-﻿using DataMapper.SqlServerDao;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DAOFactoryMethod.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace DataMapper
 {
+    using System;
+    using System.Configuration;
+    using DataMapper.SqlServerDao;
+
+    /// <summary>
+    /// Factory method for creating Data Access Objects (DAO) factories based on the configured data provider.
+    /// </summary>
     public static class DAOFactoryMethod
     {
-        private static readonly IDAOFactory _currentDAOFactory;
+        /// <summary>
+        /// The current Data Access Object (DAO) factory.
+        /// </summary>
+        private static readonly IDAOFactory ThisCurrentDAOFactory;
 
-        /// <summary>Initializes the <see cref="DAOFactoryMethod" /> class.</summary>
+        /// <summary>
+        /// Initializes static members of the <see cref="DAOFactoryMethod" /> class DataMapper.
+        /// </summary>
         static DAOFactoryMethod()
         {
             string currentDataProvider = ConfigurationManager.AppSettings["dataProvider"];
-            if (String.IsNullOrWhiteSpace(currentDataProvider))
+            if (string.IsNullOrWhiteSpace(currentDataProvider))
             {
-                _currentDAOFactory = null;
+                ThisCurrentDAOFactory = null;
             }
             else
             {
                 switch (currentDataProvider.ToLower().Trim())
                 {
                     case "sqlserver":
-                        _currentDAOFactory = new SQLServerDAOFactory();
+                        ThisCurrentDAOFactory = new SQLServerDAOFactory();
                         break;
                     case "oracle":
-                        _currentDAOFactory = null;//de fapt ar trebui un new OracleDaoFactory, dar care nu e inca scris
+                        ThisCurrentDAOFactory = null; // In practice, this should be a new OracleDaoFactory, but it's not yet implemented.
                         return;
                     default:
-                        _currentDAOFactory = new SQLServerDAOFactory();
+                        ThisCurrentDAOFactory = new SQLServerDAOFactory();
                         break;
                 }
             }
         }
-        /// <summary>Gets the current DAO factory.</summary>
+
+        /// <summary>
+        /// Gets the current DAO factory.
+        /// </summary>
         /// <value>The current DAO factory.</value>
         public static IDAOFactory CurrentDAOFactory
         {
             get
             {
-                return _currentDAOFactory;
+                return ThisCurrentDAOFactory;
             }
         }
     }

@@ -1,32 +1,47 @@
-﻿namespace DataMapper.Migrations
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="202401061214290_Update1.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace DataMapper.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
+    /// <summary>
+    /// Represents a database migration that updates the BorrowedBooks table.
+    /// </summary>
     public partial class Update1 : DbMigration
     {
+        /// <summary>
+        /// Represents a database migration that updates the BorrowedBooks table.
+        /// </summary>
         public override void Up()
         {
-            DropForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People");
-            DropIndex("dbo.BorrowedBooks", new[] { "Reader_Id" });
-            AddColumn("dbo.BorrowedBooks", "Staff_Id", c => c.Int());
-            AlterColumn("dbo.BorrowedBooks", "Reader_Id", c => c.Int());
-            CreateIndex("dbo.BorrowedBooks", "Reader_Id");
-            CreateIndex("dbo.BorrowedBooks", "Staff_Id");
-            AddForeignKey("dbo.BorrowedBooks", "Staff_Id", "dbo.People", "Id");
-            AddForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People", "Id");
+            this.DropForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People");
+            this.DropIndex("dbo.BorrowedBooks", new[] { "Reader_Id" });
+            this.AddColumn("dbo.BorrowedBooks", "Staff_Id", c => c.Int());
+            this.AlterColumn("dbo.BorrowedBooks", "Reader_Id", c => c.Int());
+            this.CreateIndex("dbo.BorrowedBooks", "Reader_Id");
+            this.CreateIndex("dbo.BorrowedBooks", "Staff_Id");
+            this.AddForeignKey("dbo.BorrowedBooks", "Staff_Id", "dbo.People", "Id");
+            this.AddForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People", "Id");
         }
-        
+
+        /// <summary>
+        /// Reverts changes to the database schema.
+        /// </summary>
         public override void Down()
         {
-            DropForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People");
-            DropForeignKey("dbo.BorrowedBooks", "Staff_Id", "dbo.People");
-            DropIndex("dbo.BorrowedBooks", new[] { "Staff_Id" });
-            DropIndex("dbo.BorrowedBooks", new[] { "Reader_Id" });
-            AlterColumn("dbo.BorrowedBooks", "Reader_Id", c => c.Int(nullable: false));
-            DropColumn("dbo.BorrowedBooks", "Staff_Id");
-            CreateIndex("dbo.BorrowedBooks", "Reader_Id");
-            AddForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People", "Id", cascadeDelete: true);
+            this.DropForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People");
+            this.DropForeignKey("dbo.BorrowedBooks", "Staff_Id", "dbo.People");
+            this.DropIndex("dbo.BorrowedBooks", new[] { "Staff_Id" });
+            this.DropIndex("dbo.BorrowedBooks", new[] { "Reader_Id" });
+            this.AlterColumn("dbo.BorrowedBooks", "Reader_Id", c => c.Int(nullable: false));
+            this.DropColumn("dbo.BorrowedBooks", "Staff_Id");
+            this.CreateIndex("dbo.BorrowedBooks", "Reader_Id");
+            this.AddForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People", "Id", cascadeDelete: true);
         }
     }
 }

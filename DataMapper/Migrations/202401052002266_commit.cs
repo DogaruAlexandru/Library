@@ -1,10 +1,22 @@
-﻿namespace DataMapper.Migrations
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="202401052002266_commit.cs" company="Transilvania University of Brasov">
+//   Copyright (c) Dogaru Alexandru.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace DataMapper.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
-    public partial class commit : DbMigration
+
+    /// <summary>
+    /// Represents a database migration that creates or updates tables based on changes made to the model.
+    /// </summary>
+    public partial class Commit : DbMigration
     {
+        /// <summary>
+        /// Represents a database migration that creates or updates tables based on changes made to the model.
+        /// </summary>
         public override void Up()
         {
             CreateTable(
@@ -109,35 +121,37 @@
                 .ForeignKey("dbo.Books", t => t.Book_Id, cascadeDelete: true)
                 .Index(t => t.BookDomain_Id)
                 .Index(t => t.Book_Id);
-            
         }
-        
+
+        /// <summary>
+        /// Reverts changes to the database schema.
+        /// </summary>
         public override void Down()
         {
-            DropForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People");
-            DropForeignKey("dbo.BorrowedBooks", "Edition_Id", "dbo.Editions");
-            DropForeignKey("dbo.Editions", "Book_Id", "dbo.Books");
-            DropForeignKey("dbo.BookDomains", "ParentDomain_Id", "dbo.BookDomains");
-            DropForeignKey("dbo.BookDomainBooks", "Book_Id", "dbo.Books");
-            DropForeignKey("dbo.BookDomainBooks", "BookDomain_Id", "dbo.BookDomains");
-            DropForeignKey("dbo.BookAuthors", "Author_Id", "dbo.Authors");
-            DropForeignKey("dbo.BookAuthors", "Book_Id", "dbo.Books");
-            DropIndex("dbo.BookDomainBooks", new[] { "Book_Id" });
-            DropIndex("dbo.BookDomainBooks", new[] { "BookDomain_Id" });
-            DropIndex("dbo.BookAuthors", new[] { "Author_Id" });
-            DropIndex("dbo.BookAuthors", new[] { "Book_Id" });
-            DropIndex("dbo.BorrowedBooks", new[] { "Reader_Id" });
-            DropIndex("dbo.BorrowedBooks", new[] { "Edition_Id" });
-            DropIndex("dbo.Editions", new[] { "Book_Id" });
-            DropIndex("dbo.BookDomains", new[] { "ParentDomain_Id" });
-            DropTable("dbo.BookDomainBooks");
-            DropTable("dbo.BookAuthors");
-            DropTable("dbo.People");
-            DropTable("dbo.BorrowedBooks");
-            DropTable("dbo.Editions");
-            DropTable("dbo.BookDomains");
-            DropTable("dbo.Books");
-            DropTable("dbo.Authors");
+            this.DropForeignKey("dbo.BorrowedBooks", "Reader_Id", "dbo.People");
+            this.DropForeignKey("dbo.BorrowedBooks", "Edition_Id", "dbo.Editions");
+            this.DropForeignKey("dbo.Editions", "Book_Id", "dbo.Books");
+            this.DropForeignKey("dbo.BookDomains", "ParentDomain_Id", "dbo.BookDomains");
+            this.DropForeignKey("dbo.BookDomainBooks", "Book_Id", "dbo.Books");
+            this.DropForeignKey("dbo.BookDomainBooks", "BookDomain_Id", "dbo.BookDomains");
+            this.DropForeignKey("dbo.BookAuthors", "Author_Id", "dbo.Authors");
+            this.DropForeignKey("dbo.BookAuthors", "Book_Id", "dbo.Books");
+            this.DropIndex("dbo.BookDomainBooks", new[] { "Book_Id" });
+            this.DropIndex("dbo.BookDomainBooks", new[] { "BookDomain_Id" });
+            this.DropIndex("dbo.BookAuthors", new[] { "Author_Id" });
+            this.DropIndex("dbo.BookAuthors", new[] { "Book_Id" });
+            this.DropIndex("dbo.BorrowedBooks", new[] { "Reader_Id" });
+            this.DropIndex("dbo.BorrowedBooks", new[] { "Edition_Id" });
+            this.DropIndex("dbo.Editions", new[] { "Book_Id" });
+            this.DropIndex("dbo.BookDomains", new[] { "ParentDomain_Id" });
+            this.DropTable("dbo.BookDomainBooks");
+            this.DropTable("dbo.BookAuthors");
+            this.DropTable("dbo.People");
+            this.DropTable("dbo.BorrowedBooks");
+            this.DropTable("dbo.Editions");
+            this.DropTable("dbo.BookDomains");
+            this.DropTable("dbo.Books");
+            this.DropTable("dbo.Authors");
         }
     }
 }

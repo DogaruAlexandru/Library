@@ -63,11 +63,11 @@
     <Compile Include="IBookDataService.cs" />
     <Compile Include="IBookDomainDataService.cs" />
     <Compile Include="IBorrowedBookDataService.cs" />
-    <Compile Include="IEditionsDataService.cs" />
+    <Compile Include="IEditionDataService.cs" />
     <Compile Include="IPersonDataService.cs" />
-    <Compile Include="Migrations\202401052002266_commit.cs" />
-    <Compile Include="Migrations\202401052002266_commit.designer.cs">
-      <DependentUpon>202401052002266_commit.cs</DependentUpon>
+    <Compile Include="Migrations\202401052002266_Commit.cs" />
+    <Compile Include="Migrations\202401052002266_Commit.designer.cs">
+      <DependentUpon>202401052002266_Commit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202401052047280_Update.cs" />
     <Compile Include="Migrations\202401052047280_Update.designer.cs">
@@ -109,8 +109,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202401052002266_commit.resx">
-      <DependentUpon>202401052002266_commit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401052002266_Commit.resx">
+      <DependentUpon>202401052002266_Commit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401052047280_Update.resx">
       <DependentUpon>202401052047280_Update.cs</DependentUpon>
