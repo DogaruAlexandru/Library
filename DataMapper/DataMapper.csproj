@@ -85,6 +85,10 @@
     <Compile Include="Migrations\202401062150575_Update3.designer.cs">
       <DependentUpon>202401062150575_Update3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401072155388_Update4.cs" />
+    <Compile Include="Migrations\202401072155388_Update4.designer.cs">
+      <DependentUpon>202401072155388_Update4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAOFactoryMethod.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401062150575_Update3.resx">
       <DependentUpon>202401062150575_Update3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401072155388_Update4.resx">
+      <DependentUpon>202401072155388_Update4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

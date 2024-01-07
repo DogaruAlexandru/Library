@@ -77,6 +77,7 @@ namespace DomainModel
         /// Gets or sets the page count of the edition.
         /// </summary>
         [Required(ErrorMessage = "The PageCount cannot be null")]
+        [Range(1, uint.MaxValue, ErrorMessage = "The PageCount must be at least 1")]
         public uint PageCount { get; set; }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace DomainModel
         /// Gets or sets the publisher of the edition.
         /// </summary>
         [Required(ErrorMessage = "The Publisher cannot be null")]
-        [StringLength(100, MinimumLength = 1)]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "The length must be between 1 and 100")]
         public string Publisher { get; set; }
 
         /// <summary>

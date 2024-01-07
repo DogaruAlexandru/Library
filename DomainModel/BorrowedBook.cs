@@ -69,6 +69,6 @@ namespace DomainModel
         /// <summary>
         /// Gets or sets the date when the borrowed book was returned.
         /// </summary>
-        public DateTime ReturnedDate { get; set; }
+        public DateTime? ReturnedDate { get; set; }
     }
 }
