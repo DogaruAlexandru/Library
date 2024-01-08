@@ -31,6 +31,20 @@ namespace ServiceLayer.ServiceImplementation
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BorrowedBookServicesImplementation"/> class.
+        /// </summary>
+        /// <param name="authorDataService">The data service for borrowedBooks.</param>
+        public BorrowedBookServicesImplementation(IBorrowedBookDataService borrowedBookDataService)
+        {
+            this.BorrowedBookDataService = borrowedBookDataService;
+        }
+
+        /// <summary>
+        /// Gets or sets the data service for borrowedBooks.
+        /// </summary>
+        private IBorrowedBookDataService BorrowedBookDataService { get; set; }
+
+        /// <summary>
         /// Adds a new borrowed book to the system.
         /// </summary>
         /// <param name="borrowedBook">The borrowed book to be added.</param>
@@ -40,7 +54,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Adding BorrowedBook with ID: {borrowedBook.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.AddBorrowedBook(borrowedBook);
+            this.BorrowedBookDataService.AddBorrowedBook(borrowedBook);
         }
 
         /// <summary>
@@ -51,7 +65,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Deleting BorrowedBook with ID: {borrowedBook.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.DeleteBorrowedBook(borrowedBook);
+            this.BorrowedBookDataService.DeleteBorrowedBook(borrowedBook);
         }
 
         /// <summary>
@@ -62,7 +76,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug("Getting all BorrowedBooks.");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.GetAllBorrowedBooks();
+            return this.BorrowedBookDataService.GetAllBorrowedBooks();
         }
 
         /// <summary>
@@ -74,7 +88,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Getting BorrowedBook with ID: {id}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.GetBorrowedBookById(id);
+            return this.BorrowedBookDataService.GetBorrowedBookById(id);
         }
 
         /// <summary>
@@ -87,7 +101,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Updating BorrowedBook with ID: {borrowedBook.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.UpdateBorrowedBook(borrowedBook);
+            this.BorrowedBookDataService.UpdateBorrowedBook(borrowedBook);
         }
 
         /// <summary>
@@ -99,8 +113,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Verifying Edition can be borrowed with ID: {edition.Id}");
 
-            int borrowedBooksCount = DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
-                .CountBorrowedBooksByEditionWithNullReturnedDate(edition);
+            int borrowedBooksCount = this.BorrowedBookDataService.CountBorrowedBooksByEditionWithNullReturnedDate(edition);
 
             return (edition.CanBorrow - borrowedBooksCount) * 10 > edition.CanBorrow + edition.CanNotBorrow;
         }
@@ -115,7 +128,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Counting borrowed books for Person with ID {person.Id} since {date.ToShortDateString()}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.CountBorrowedBooksByPersonAndDate(person, date);
+            return this.BorrowedBookDataService.CountBorrowedBooksByPersonAndDate(person, date);
         }
 
         /// <summary>
@@ -129,8 +142,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Counting borrowed books for Person with ID {person.Id}, BookDomain with ID {bookDomain.Id} after {date.ToShortDateString()}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
-                .CountBorrowedBooksForPersonAndDomainAfterDate(person, bookDomain, date);
+            return this.BorrowedBookDataService.CountBorrowedBooksForPersonAndDomainAfterDate(person, bookDomain, date);
         }
 
         /// <summary>
@@ -143,8 +155,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Getting due date differences for Person with ID {person.Id} after {date.ToShortDateString()}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
-                .GetDueDateDifferencesForPersonAfterDate(person, date);
+            return this.BorrowedBookDataService.GetDueDateDifferencesForPersonAfterDate(person, date);
         }
 
         /// <summary>
@@ -158,8 +169,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Counting borrowed books for Person with ID {person.Id}, Edition with ID {edition.Id} after {date.ToShortDateString()}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
-                .CountBorrowedBooksByEditionForPersonAfterDate(person, edition, date);
+            return this.BorrowedBookDataService.CountBorrowedBooksByEditionForPersonAfterDate(person, edition, date);
         }
 
         /// <summary>
@@ -172,8 +182,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Counting books borrowed by Person with ID {person.Id} on {date.ToShortDateString()}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
-                .CountBooksBorrowedByPersonOnDate(person, date);
+            return this.BorrowedBookDataService.CountBooksBorrowedByPersonOnDate(person, date);
         }
 
         /// <summary>
@@ -186,8 +195,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Counting books borrowed by Person with ID {person.Id} with 'Suff' attribute on {date.ToShortDateString()}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService
-                .CountBooksBorrowedBySuffOnDate(person, date);
+            return this.BorrowedBookDataService.CountBooksBorrowedBySuffOnDate(person, date);
         }
 
         /// <summary>
@@ -206,14 +214,14 @@ namespace ServiceLayer.ServiceImplementation
                 for (i = 0; i < borrowedBooks.Count; i++)
                 {
                     this.ValidateEntity(borrowedBooks[i]);
-                    DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.AddBorrowedBook(borrowedBooks[i]);
+                    this.BorrowedBookDataService.AddBorrowedBook(borrowedBooks[i]);
                 }
             }
             catch (ValidationException ex)
             {
                 for (int j = 0; j < i; j++)
                 {
-                    DAOFactoryMethod.CurrentDAOFactory.BorrowedBookDataService.DeleteBorrowedBook(borrowedBooks[i]);
+                    this.BorrowedBookDataService.DeleteBorrowedBook(borrowedBooks[i]);
                 }
 
                 throw new ValidationException($"Validation failed at index {i}; " + ex.Message);

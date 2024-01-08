@@ -23,6 +23,20 @@ namespace ServiceLayer.ServiceImplementation
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="EditionServiceImplementation"/> class.
+        /// </summary>
+        /// <param name="authorDataService">The data service for editions.</param>
+        public EditionServiceImplementation(IEditionDataService editionDataService)
+        {
+            this.EditionDataService = editionDataService;
+        }
+
+        /// <summary>
+        /// Gets or sets the data service for editions.
+        /// </summary>
+        private IEditionDataService EditionDataService { get; set; }
+
+        /// <summary>
         /// Adds a new edition.
         /// </summary>
         /// <param name="edition">The edition to be added.</param>
@@ -32,7 +46,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Adding Edition with ID: {edition.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.EditionDataService.AddEdition(edition);
+            this.EditionDataService.AddEdition(edition);
         }
 
         /// <summary>
@@ -43,7 +57,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Deleting Edition with ID: {edition.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.EditionDataService.DeleteEdition(edition);
+            this.EditionDataService.DeleteEdition(edition);
         }
 
         /// <summary>
@@ -54,7 +68,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug("Getting all Editions.");
 
-            return DAOFactoryMethod.CurrentDAOFactory.EditionDataService.GetAllEditions();
+            return this.EditionDataService.GetAllEditions();
         }
 
         /// <summary>
@@ -66,7 +80,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Getting Edition with ID: {id}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.EditionDataService.GetEditionById(id);
+            return this.EditionDataService.GetEditionById(id);
         }
 
         /// <summary>
@@ -79,7 +93,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Updating Edition with ID: {edition.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.EditionDataService.UpdateEdition(edition);
+            this.EditionDataService.UpdateEdition(edition);
         }
     }
 }

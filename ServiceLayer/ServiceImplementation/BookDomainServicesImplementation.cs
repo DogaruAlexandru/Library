@@ -23,6 +23,20 @@ namespace ServiceLayer.ServiceImplementation
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AuthorServicesImplementation"/> class.
+        /// </summary>
+        /// <param name="bookDomainDataService">The data service for bookDomains.</param>
+        public BookDomainServicesImplementation(IBookDomainDataService bookDomainDataService)
+        {
+            this.BookDomainService = bookDomainDataService;
+        }
+
+        /// <summary>
+        /// Gets or sets the data service for bookDomains.
+        /// </summary>
+        private IBookDomainDataService BookDomainService {  get; set; }
+
+        /// <summary>
         /// Adds a new book domain.
         /// </summary>
         /// <param name="bookDomain">The book domain to be added.</param>
@@ -32,7 +46,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Adding BookDomain with ID: {bookDomain.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BookDomainDataService.AddBookDomain(bookDomain);
+            this.BookDomainService.AddBookDomain(bookDomain);
         }
 
         /// <summary>
@@ -43,7 +57,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Deleting BookDomain with ID: {bookDomain.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BookDomainDataService.DeleteBookDomain(bookDomain);
+            this.BookDomainService.DeleteBookDomain(bookDomain);
         }
 
         /// <summary>
@@ -54,7 +68,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug("Getting all BookDomains.");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BookDomainDataService.GetAllBookDomains();
+            return this.BookDomainService.GetAllBookDomains();
         }
 
         /// <summary>
@@ -66,7 +80,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Getting BookDomain with ID: {id}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BookDomainDataService.GetBookDomainById(id);
+            return this.BookDomainService.GetBookDomainById(id);
         }
 
         /// <summary>
@@ -79,7 +93,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Updating BookDomain with ID: {bookDomain.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BookDomainDataService.UpdateBookDomain(bookDomain);
+            this.BookDomainService.UpdateBookDomain(bookDomain);
         }
     }
 }

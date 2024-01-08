@@ -26,6 +26,20 @@ namespace ServiceLayer.ServiceImplementation
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BookServicesImplementation"/> class.
+        /// </summary>
+        /// <param name="authorDataService">The data service for books.</param>
+        public BookServicesImplementation(IBookDataService bookDataService)
+        {
+            this.BookDataService = bookDataService;
+        }
+
+        /// <summary>
+        /// Gets or sets the data service for books.
+        /// </summary>
+        private IBookDataService BookDataService { get; set; }
+
+        /// <summary>
         /// Adds a new book to the system.
         /// </summary>
         /// <param name="book">The book to be added.</param>
@@ -35,7 +49,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Adding Book with ID: {book.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BookDataService.AddBook(book);
+            this.BookDataService.AddBook(book);
         }
 
         /// <summary>
@@ -46,7 +60,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Deleting Book with ID: {book.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BookDataService.DeleteBook(book);
+            this.BookDataService.DeleteBook(book);
         }
 
         /// <summary>
@@ -57,7 +71,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug("Getting all Books.");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BookDataService.GetAllBooks();
+            return this.BookDataService.GetAllBooks();
         }
 
         /// <summary>
@@ -69,7 +83,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Getting Book with ID: {id}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.BookDataService.GetBookById(id);
+            return this.BookDataService.GetBookById(id);
         }
 
         /// <summary>
@@ -82,7 +96,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Updating Book with ID: {book.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.BookDataService.UpdateBook(book);
+            this.BookDataService.UpdateBook(book);
         }
 
         /// <inheritdoc/>
@@ -115,7 +129,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="book">The book to be validated.</param>
         private void VerifyDifferentDomainRoots(Book book)
         {
-            IBookDomainService service = new BookDomainServicesImplementation();
+            IBookDomainService service = new BookDomainServicesImplementation(DAOFactoryMethod.CurrentDAOFactory.BookDomainDataService);
 
             List<int> domainsRoots = new List<int>();
             foreach (var bookDomain in book.BookDomains)

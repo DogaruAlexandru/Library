@@ -23,6 +23,20 @@ namespace ServiceLayer.ServiceImplementation
         private static readonly ILog Log = LogManager.GetLogger(typeof(PersonServiceImplementation));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PersonServiceImplementation"/> class.
+        /// </summary>
+        /// <param name="authorDataService">The data service for persons.</param>
+        public PersonServiceImplementation(IPersonDataService personDataService)
+        {
+            this.PersonDataService = personDataService;
+        }
+
+        /// <summary>
+        /// Gets or sets the data service for persons.
+        /// </summary>
+        private IPersonDataService PersonDataService { get; set; }
+
+        /// <summary>
         /// Adds a new person to the data source.
         /// </summary>
         /// <param name="person">The person object to be added.</param>
@@ -32,7 +46,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Adding Person with ID: {person.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.PersonDataService.AddPerson(person);
+            this.PersonDataService.AddPerson(person);
         }
 
         /// <summary>
@@ -43,7 +57,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Deleting Person with ID: {person.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.PersonDataService.DeletePerson(person);
+            this.PersonDataService.DeletePerson(person);
         }
 
         /// <summary>
@@ -54,7 +68,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug("Getting all Persons.");
 
-            return DAOFactoryMethod.CurrentDAOFactory.PersonDataService.GetAllPersons();
+            return this.PersonDataService.GetAllPersons();
         }
 
         /// <summary>
@@ -66,7 +80,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Getting Person with ID: {id}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.PersonDataService.GetPersonById(id);
+            return this.PersonDataService.GetPersonById(id);
         }
 
         /// <summary>
@@ -79,7 +93,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Updating Person with ID: {person.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.PersonDataService.UpdatePerson(person);
+            this.PersonDataService.UpdatePerson(person);
         }
     }
 }
