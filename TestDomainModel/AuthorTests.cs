@@ -29,14 +29,12 @@ namespace TestDomainModel
             var author = new Author
             {
                 Id = 1, // Set a valid Id
-                Name = "John Doe",
-                Books = new List<Book>()
             };
 
             // Act
-            var validationContext = new System.ComponentModel.DataAnnotations.ValidationContext(author, null, null);
+            var validationContext = new ValidationContext(author) { MemberName = nameof(Author.Id) };
             var results = new List<ValidationResult>();
-            var isValid = Validator.TryValidateObject(author, validationContext, results, true);
+            var isValid = Validator.TryValidateProperty(author.Id, validationContext, results);
 
             // Assert
             Assert.IsTrue(isValid, "Author Id validation failed.");
@@ -52,13 +50,12 @@ namespace TestDomainModel
             var author = new Author
             {
                 Name = "John Doe",
-                Books = new List<Book>()
             };
 
             // Act
-            var validationContext = new ValidationContext(author, null, null);
+            var validationContext = new ValidationContext(author) { MemberName = nameof(Author.Name) };
             var results = new List<ValidationResult>();
-            var isValid = Validator.TryValidateObject(author, validationContext, results, true);
+            var isValid = Validator.TryValidateProperty(author.Name, validationContext, results);
 
             // Assert
             Assert.IsTrue(isValid, "Author name validation failed.");
@@ -73,14 +70,13 @@ namespace TestDomainModel
             // Arrange
             var author = new Author
             {
-                Name = string.Empty,
-                Books = new List<Book>()
+                Name = string.Empty
             };
 
             // Act
-            var validationContext = new System.ComponentModel.DataAnnotations.ValidationContext(author, null, null);
+            var validationContext = new ValidationContext(author) { MemberName = nameof(Author.Name) };
             var results = new List<ValidationResult>();
-            var isValid = Validator.TryValidateObject(author, validationContext, results, true);
+            var isValid = Validator.TryValidateProperty(author.Name, validationContext, results);
 
             // Assert
             Assert.IsFalse(isValid, "Author name validation passed for a too short name.");
@@ -98,8 +94,7 @@ namespace TestDomainModel
             // Arrange
             var author = new Author
             {
-                Name = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-                Books = new List<Book>()
+                Name = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
             };
 
             // Act
@@ -124,7 +119,6 @@ namespace TestDomainModel
             var author = new Author
             {
                 Name = "Jane Doe",
-                Books = new List<Book> { new Book { Title = "Sample Book" } }
             };
 
             // Act
@@ -137,28 +131,25 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Validates that the <see cref="Author.Books"/> property fails validation for a null Books collection.
+        /// Validates that the <see cref="Author.Books"/> property passes validation for a null Books collection.
         /// </summary>
         [TestMethod]
-        public void AuthorValidateBooksNotNullFailure()
+        public void AuthorValidateBooksNotNullPass()
         {
             // Arrange
             var author = new Author
             {
-                Name = "Jane Doe",
                 Books = null
             };
 
             // Act
-            var validationContext = new System.ComponentModel.DataAnnotations.ValidationContext(author, null, null);
+            var validationContext = new ValidationContext(author) { MemberName = nameof(Author.Books) };
             var results = new List<ValidationResult>();
-            var isValid = Validator.TryValidateObject(author, validationContext, results, true);
+            var isValid = Validator.TryValidateProperty(author.Books, validationContext, results);
 
             // Assert
-            Assert.IsFalse(isValid, "Author Books validation passed for null Books collection.");
-            Assert.IsTrue(
-                results.Any(vr => vr.MemberNames.Contains(nameof(Author.Books)) && vr.ErrorMessage.Contains("cannot be null")),
-                "Expected validation error message not found.");
+            Assert.IsTrue(isValid, "Author Books validation passed for null Books collection.");
+            Assert.AreEqual(0, results.Count);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace DomainModel
         /// <summary>
         /// Gets or sets the collection of books written by the author.
         /// </summary>
-        [Required(ErrorMessage = "The Books collection cannot be null")]
+        [MinLength(1, ErrorMessage = "At least one Book is required")]
         public virtual ICollection<Book> Books { get; set; }
     }
 }

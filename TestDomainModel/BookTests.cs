@@ -245,7 +245,7 @@ namespace TestDomainModel
             // Assert
             var validationContext = new ValidationContext(book) { MemberName = nameof(Book.BookDomains) };
             var validationResults = new List<ValidationResult>();
-            var isValid = Validator.TryValidateProperty(book.BookDomains?.ToArray() ?? new BookDomain[0], validationContext, validationResults);
+            var isValid = Validator.TryValidateProperty(book.BookDomains.ToArray<BookDomain>(), validationContext, validationResults);
 
             Assert.IsFalse(isValid);
             Assert.AreEqual(1, validationResults.Count);
@@ -299,7 +299,7 @@ namespace TestDomainModel
             Validator.TryValidateProperty(book.Title, new ValidationContext(book) { MemberName = nameof(Book.Title) }, validationResults);
             Validator.TryValidateProperty(book.Description, new ValidationContext(book) { MemberName = nameof(Book.Description) }, validationResults);
             Validator.TryValidateProperty(book.Editions, new ValidationContext(book) { MemberName = nameof(Book.Editions) }, validationResults);
-            Validator.TryValidateProperty(book.BookDomains?.ToArray() ?? new BookDomain[0], new ValidationContext(book) { MemberName = nameof(Book.BookDomains) }, validationResults);
+            Validator.TryValidateProperty(book.BookDomains.ToArray<BookDomain>(), new ValidationContext(book) { MemberName = nameof(Book.BookDomains) }, validationResults);
             Validator.TryValidateProperty(book.Authors, new ValidationContext(book) { MemberName = nameof(Book.Authors) }, validationResults);
 
             // Assert
@@ -331,7 +331,7 @@ namespace TestDomainModel
             Validator.TryValidateProperty(book.Title, new ValidationContext(book) { MemberName = nameof(Book.Title) }, validationResults);
             Validator.TryValidateProperty(book.Description, new ValidationContext(book) { MemberName = nameof(Book.Description) }, validationResults);
             Validator.TryValidateProperty(book.Editions, new ValidationContext(book) { MemberName = nameof(Book.Editions) }, validationResults);
-            Validator.TryValidateProperty(book.BookDomains?.ToArray() ?? new BookDomain[0], new ValidationContext(book) { MemberName = nameof(Book.BookDomains) }, validationResults);
+            Validator.TryValidateProperty(book.BookDomains.ToArray<BookDomain>(), new ValidationContext(book) { MemberName = nameof(Book.BookDomains) }, validationResults);
             Validator.TryValidateProperty(book.Authors, new ValidationContext(book) { MemberName = nameof(Book.Authors) }, validationResults);
 
             // Assert

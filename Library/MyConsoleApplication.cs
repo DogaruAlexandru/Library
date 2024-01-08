@@ -8,6 +8,8 @@ namespace Library
 {
     using System;
     using DataMapper.SqlServerDao;
+    using DomainModel;
+    using ServiceLayer.ServiceImplementation;
 
     /// <summary>
     /// Represents the main console application.

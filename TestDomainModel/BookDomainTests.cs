@@ -8,6 +8,7 @@ namespace TestDomainModel
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using DomainModel;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -154,10 +155,10 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Verifies that the Books collection of the BookDomain class cannot be null.
+        /// Verifies that the Books collection of the BookDomain class can be null.
         /// </summary>
         [TestMethod]
-        public void BooksCollectionShouldNotBeNull()
+        public void BooksCollectionCanBeNull()
         {
             // Arrange
             var bookDomain = new BookDomain();
@@ -170,16 +171,15 @@ namespace TestDomainModel
             var validationResults = new List<ValidationResult>();
             var isValid = Validator.TryValidateProperty(bookDomain.Books, validationContext, validationResults);
 
-            Assert.IsFalse(isValid);
-            Assert.AreEqual(1, validationResults.Count);
-            Assert.AreEqual("The Books collection cannot be null", validationResults[0].ErrorMessage);
+            Assert.IsTrue(isValid);
+            Assert.AreEqual(0, validationResults.Count);
         }
 
         /// <summary>
-        /// Verifies that the Books collection of the BookDomain class is initialized as an empty collection by default.
+        /// Verifies that the Books collection of the BookDomain class cannot be empty.
         /// </summary>
         [TestMethod]
-        public void BooksCollectionCanBeEmpty()
+        public void BooksCollectionCanNotBeEmpty()
         {
             // Arrange
             var bookDomain = new BookDomain();
@@ -190,12 +190,11 @@ namespace TestDomainModel
             // Assert
             var validationContext = new ValidationContext(bookDomain) { MemberName = nameof(BookDomain.Books) };
             var validationResults = new List<ValidationResult>();
-            var isValid = Validator.TryValidateProperty(bookDomain.Books, validationContext, validationResults);
+            var isValid = Validator.TryValidateProperty(bookDomain.Books.ToArray<Book>(), validationContext, validationResults);
 
-            Assert.IsTrue(isValid);
-            Assert.AreEqual(0, validationResults.Count);
-            Assert.IsNotNull(bookDomain.Books);
-            Assert.IsTrue(bookDomain.Books.Count == 0);
+            Assert.IsFalse(isValid);
+            Assert.AreEqual(1, validationResults.Count);
+            Assert.AreEqual("At least one Book is required", validationResults[0].ErrorMessage);
         }
 
         /// <summary>
@@ -215,7 +214,7 @@ namespace TestDomainModel
             // Assert
             var validationContext = new ValidationContext(bookDomain) { MemberName = nameof(BookDomain.Books) };
             var validationResults = new List<ValidationResult>();
-            var isValid = Validator.TryValidateProperty(bookDomain.Books, validationContext, validationResults);
+            var isValid = Validator.TryValidateProperty(bookDomain.Books.ToArray<Book>(), validationContext, validationResults);
 
             Assert.IsTrue(isValid);
             Assert.AreEqual(0, validationResults.Count);
@@ -242,7 +241,12 @@ namespace TestDomainModel
 
             // Act
             var validationResults = new List<ValidationResult>();
-            Validator.TryValidateObject(validBookDomain, new ValidationContext(validBookDomain), validationResults, validateAllProperties: true);
+
+            // Validate individual properties
+            Validator.TryValidateProperty(validBookDomain.Id, new ValidationContext(validBookDomain) { MemberName = nameof(BookDomain.Id) }, validationResults);
+            Validator.TryValidateProperty(validBookDomain.Name, new ValidationContext(validBookDomain) { MemberName = nameof(BookDomain.Name) }, validationResults);
+            Validator.TryValidateProperty(validBookDomain.ParentDomain, new ValidationContext(validBookDomain) { MemberName = nameof(BookDomain.ParentDomain) }, validationResults);
+            Validator.TryValidateProperty(validBookDomain.Books.ToArray<Book>(), new ValidationContext(validBookDomain) { MemberName = nameof(BookDomain.Books) }, validationResults);
 
             // Assert
             Assert.IsTrue(validationResults.Count == 0);
@@ -258,14 +262,19 @@ namespace TestDomainModel
             var invalidBookDomain = new BookDomain
             {
                 Id = 1,
-                Name = "ValidBookDomain",
+                //// Name is missing, intentionally causing failure
                 ParentDomain = null, // Set a valid null parent domain
-                //// Books is missing, intentionally causing failure
+                Books = new List<Book> { new Book(), new Book { Title = "Title" }, new Book() }
             };
 
             // Act
             var validationResults = new List<ValidationResult>();
-            Validator.TryValidateObject(invalidBookDomain, new ValidationContext(invalidBookDomain), validationResults, validateAllProperties: true);
+
+            // Validate individual properties
+            Validator.TryValidateProperty(invalidBookDomain.Id, new ValidationContext(invalidBookDomain) { MemberName = nameof(BookDomain.Id) }, validationResults);
+            Validator.TryValidateProperty(invalidBookDomain.Name, new ValidationContext(invalidBookDomain) { MemberName = nameof(BookDomain.Name) }, validationResults);
+            Validator.TryValidateProperty(invalidBookDomain.ParentDomain, new ValidationContext(invalidBookDomain) { MemberName = nameof(BookDomain.ParentDomain) }, validationResults);
+            Validator.TryValidateProperty(invalidBookDomain.Books.ToArray<Book>(), new ValidationContext(invalidBookDomain) { MemberName = nameof(BookDomain.Books) }, validationResults);
 
             // Assert
             Assert.IsTrue(validationResults.Count > 0);

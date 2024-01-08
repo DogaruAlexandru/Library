@@ -29,6 +29,20 @@ namespace ServiceLayer.ServiceImplementation
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AuthorServicesImplementation"/> class.
+        /// </summary>
+        /// <param name="authorDataService">The data service for authors.</param>
+        public AuthorServicesImplementation(IAuthorDataService authorDataService)
+        {
+            this.AuthorDataService = authorDataService;
+        }
+
+        /// <summary>
+        /// Gets or sets the data service for authors.
+        /// </summary>
+        private IAuthorDataService AuthorDataService { get; set; }
+
+        /// <summary>
         /// Adds an Author entity.
         /// </summary>
         /// <param name="author">The Author entity to be added.</param>
@@ -38,7 +52,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Adding Author with ID: {author.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.AuthorDataService.AddAuthor(author);
+            this.AuthorDataService.AddAuthor(author);
         }
 
         /// <summary>
@@ -49,7 +63,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Deleting Author with ID: {author.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.AuthorDataService.DeleteAuthor(author);
+            this.AuthorDataService.DeleteAuthor(author);
         }
 
         /// <summary>
@@ -60,7 +74,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug("Getting all Authors.");
 
-            return DAOFactoryMethod.CurrentDAOFactory.AuthorDataService.GetAllAuthors();
+            return this.AuthorDataService.GetAllAuthors();
         }
 
         /// <summary>
@@ -72,7 +86,7 @@ namespace ServiceLayer.ServiceImplementation
         {
             Log.Debug($"Getting Author with ID: {id}");
 
-            return DAOFactoryMethod.CurrentDAOFactory.AuthorDataService.GetAuthorById(id);
+            return this.AuthorDataService.GetAuthorById(id);
         }
 
         /// <summary>
@@ -85,7 +99,7 @@ namespace ServiceLayer.ServiceImplementation
 
             Log.Info($"Updating Author with ID: {author.Id}");
 
-            DAOFactoryMethod.CurrentDAOFactory.AuthorDataService.UpdateAuthor(author);
+            this.AuthorDataService.UpdateAuthor(author);
         }
     }
 }
