@@ -61,9 +61,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetAllBookDomainsHasItems()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-
             using (this.mocks.Record())
             {
                 Expect.Call(this.bookDomainDataService.GetAllBookDomains()).Return(this.bookDomains);
@@ -71,6 +68,9 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+
                 // Act
                 var list = servicesImplementation.GetAllBookDomains();
 
@@ -86,10 +86,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetAllBookDomainsHasNoItems()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            this.bookDomains.Clear();
-
             using (this.mocks.Record())
             {
                 Expect.Call(this.bookDomainDataService.GetAllBookDomains()).Return(this.bookDomains);
@@ -97,6 +93,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                this.bookDomains.Clear();
+
                 // Act
                 var list = servicesImplementation.GetAllBookDomains();
 
@@ -111,10 +111,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetBookDomainByIdBookDomainExists()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            int existingBookDomainId = 1;
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
@@ -126,6 +122,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                int existingBookDomainId = 1;
+
                 // Act
                 BookDomain result = servicesImplementation.GetBookDomainById(existingBookDomainId);
 
@@ -143,11 +143,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetBookDomainByIdBookDomainDoesNotExistAnymore()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            int existingBookDomainId = 1;
-            this.bookDomains.Clear();
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
@@ -159,6 +154,11 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                int existingBookDomainId = 1;
+                this.bookDomains.Clear();
+
                 // Act
                 BookDomain result = servicesImplementation.GetBookDomainById(existingBookDomainId);
 
@@ -173,10 +173,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetBookDomainByIdBookDomainDoesNotExist()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            int nonExistingBookDomainId = 99;
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
@@ -188,6 +184,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                int nonExistingBookDomainId = 99;
+
                 // Act
                 BookDomain result = servicesImplementation.GetBookDomainById(nonExistingBookDomainId);
 
@@ -202,10 +202,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestAddBookDomainsHasItems()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            BookDomain BookDomain = new BookDomain { Id = 10, Name = "name" };
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.AddBookDomain(Arg<BookDomain>.Is.Anything)).WhenCalled(call =>
@@ -217,6 +213,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                BookDomain BookDomain = new BookDomain { Id = 10, Name = "name" };
+
                 // Act
                 servicesImplementation.AddBookDomain(BookDomain);
 
@@ -232,11 +232,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestAddBookDomainsHasNoItems()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            BookDomain bookDomain = new BookDomain { Id = 10, Name = "name" };
-            this.bookDomains.Clear();
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.AddBookDomain(Arg<BookDomain>.Is.Anything)).WhenCalled(call =>
@@ -248,6 +243,11 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                BookDomain bookDomain = new BookDomain { Id = 10, Name = "name" };
+                this.bookDomains.Clear();
+
                 // Act
                 servicesImplementation.AddBookDomain(bookDomain);
 
@@ -263,10 +263,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestDeleteBookDomainBookDomainExists()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            BookDomain authorToDelete = this.bookDomains.First(); // Select the first BookDomain for deletion
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.DeleteBookDomain(Arg<BookDomain>.Is.Anything)).WhenCalled(call =>
@@ -284,6 +280,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                BookDomain authorToDelete = this.bookDomains.First(); // Select the first BookDomain for deletion
+
                 // Act
                 servicesImplementation.DeleteBookDomain(authorToDelete);
 
@@ -299,10 +299,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestDeleteBookDomainBookDomainDoesNotExist()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            BookDomain nonExistingBookDomain = new BookDomain { Id = 99, Name = "NonExistingBookDomain" };
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.DeleteBookDomain(Arg<BookDomain>.Is.Anything)).WhenCalled(call =>
@@ -320,6 +316,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                BookDomain nonExistingBookDomain = new BookDomain { Id = 99, Name = "NonExistingBookDomain" };
+
                 // Assert and Act
                 Assert.ThrowsException<Exception>(() => servicesImplementation.DeleteBookDomain(nonExistingBookDomain));
             }
@@ -331,10 +331,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestUpdateBookDomainBookDomainExists()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            BookDomain authorToUpdate = this.bookDomains.First(); // Select the first BookDomain for updating
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.UpdateBookDomain(Arg<BookDomain>.Is.Anything)).WhenCalled(call =>
@@ -352,6 +348,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                BookDomain authorToUpdate = this.bookDomains.First(); // Select the first BookDomain for updating
+
                 // Act
                 servicesImplementation.UpdateBookDomain(authorToUpdate);
 
@@ -366,10 +366,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestUpdateBookDomainBookDomainDoesNotExist()
         {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-            BookDomain nonExistingBookDomain = new BookDomain { Id = 99, Name = "NonExistingBookDomain" };
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.bookDomainDataService.UpdateBookDomain(Arg<BookDomain>.Is.Anything)).WhenCalled(call =>
@@ -387,6 +383,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
+                BookDomain nonExistingBookDomain = new BookDomain { Id = 99, Name = "NonExistingBookDomain" };
+
                 // Assert and Act
                 Assert.ThrowsException<Exception>(() => servicesImplementation.UpdateBookDomain(nonExistingBookDomain));
             }

@@ -32,7 +32,7 @@ namespace ServiceLayer.ServiceImplementation
 
             var validationContext = new ValidationContext(entity, serviceProvider: null, items: null);
             var validationResults = new List<ValidationResult>();
-            bool isValid = Validator.TryValidateObject(entity, validationContext, validationResults, validateAllProperties: true);
+            bool isValid = Validator.TryValidateObject(entity, validationContext, validationResults, validateAllProperties: false);
 
             if (!isValid)
             {

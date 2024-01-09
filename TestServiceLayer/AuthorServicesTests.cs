@@ -60,9 +60,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetAllAuthorsHasItems()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-
             using (this.mocks.Record())
             {
                 Expect.Call(this.authorDataService.GetAllAuthors()).Return(this.authors);
@@ -70,6 +67,9 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+
                 // Act
                 var list = servicesImplementation.GetAllAuthors();
 
@@ -85,10 +85,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetAllAuthorsHasNoItems()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            this.authors.Clear();
-
             using (this.mocks.Record())
             {
                 Expect.Call(this.authorDataService.GetAllAuthors()).Return(this.authors);
@@ -96,6 +92,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                this.authors.Clear();
+
                 // Act
                 var list = servicesImplementation.GetAllAuthors();
 
@@ -110,10 +110,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetAuthorByIdAuthorExists()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            int existingAuthorId = 1;
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.GetAuthorById(Arg<int>.Is.Anything)).WhenCalled(call =>
@@ -125,6 +121,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                int existingAuthorId = 1;
+
                 // Act
                 Author result = servicesImplementation.GetAuthorById(existingAuthorId);
 
@@ -142,11 +142,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetAuthorByIdAuthorDoesNotExistAnymore()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            int existingAuthorId = 1;
-            this.authors.Clear();
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.GetAuthorById(Arg<int>.Is.Anything)).WhenCalled(call =>
@@ -158,6 +153,11 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                int existingAuthorId = 1;
+                this.authors.Clear();
+
                 // Act
                 Author result = servicesImplementation.GetAuthorById(existingAuthorId);
 
@@ -172,10 +172,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestGetAuthorByIdAuthorDoesNotExist()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            int nonExistingAuthorId = 99;
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.GetAuthorById(Arg<int>.Is.Anything)).WhenCalled(call =>
@@ -187,6 +183,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                int nonExistingAuthorId = 99;
+
                 // Act
                 Author result = servicesImplementation.GetAuthorById(nonExistingAuthorId);
 
@@ -201,10 +201,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestAddAuthorsHasItems()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            Author author = new Author { Id = 10, Name = "name" };
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.AddAuthor(Arg<Author>.Is.Anything)).WhenCalled(call =>
@@ -216,6 +212,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                Author author = new Author { Id = 10, Name = "name" };
+
                 // Act
                 servicesImplementation.AddAuthor(author);
 
@@ -231,11 +231,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestAddAuthorsHasNoItems()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            Author author = new Author { Id = 10, Name = "name" };
-            this.authors.Clear();
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.AddAuthor(Arg<Author>.Is.Anything)).WhenCalled(call =>
@@ -247,6 +242,11 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                Author author = new Author { Id = 10, Name = "name" };
+                this.authors.Clear();
+
                 // Act
                 servicesImplementation.AddAuthor(author);
 
@@ -262,10 +262,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestDeleteAuthorAuthorExists()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            Author authorToDelete = this.authors.First(); // Select the first author for deletion
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.DeleteAuthor(Arg<Author>.Is.Anything)).WhenCalled(call =>
@@ -283,6 +279,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                Author authorToDelete = this.authors.First(); // Select the first author for deletion
+
                 // Act
                 servicesImplementation.DeleteAuthor(authorToDelete);
 
@@ -298,10 +298,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestDeleteAuthorAuthorDoesNotExist()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            Author nonExistingAuthor = new Author { Id = 99, Name = "NonExistingAuthor" };
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.DeleteAuthor(Arg<Author>.Is.Anything)).WhenCalled(call =>
@@ -319,6 +315,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                Author nonExistingAuthor = new Author { Id = 99, Name = "NonExistingAuthor" };
+
                 // Assert and Act
                 Assert.ThrowsException<Exception>(() => servicesImplementation.DeleteAuthor(nonExistingAuthor));
             }
@@ -330,10 +330,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestUpdateAuthorAuthorExists()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            Author authorToUpdate = this.authors.First(); // Select the first author for updating
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.UpdateAuthor(Arg<Author>.Is.Anything)).WhenCalled(call =>
@@ -351,6 +347,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                Author authorToUpdate = this.authors.First(); // Select the first author for updating
+
                 // Act
                 servicesImplementation.UpdateAuthor(authorToUpdate);
 
@@ -365,10 +365,6 @@ namespace TestServiceLayer
         [TestMethod]
         public void TestUpdateAuthorAuthorDoesNotExist()
         {
-            // Arrange
-            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
-            Author nonExistingAuthor = new Author { Id = 99, Name = "NonExistingAuthor" };
-
             using (this.mocks.Record())
             {
                 Expect.Call(() => this.authorDataService.UpdateAuthor(Arg<Author>.Is.Anything)).WhenCalled(call =>
@@ -386,6 +382,10 @@ namespace TestServiceLayer
 
             using (this.mocks.Playback())
             {
+                // Arrange
+                AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(this.authorDataService);
+                Author nonExistingAuthor = new Author { Id = 99, Name = "NonExistingAuthor" };
+
                 // Assert and Act
                 Assert.ThrowsException<Exception>(() => servicesImplementation.UpdateAuthor(nonExistingAuthor));
             }

@@ -187,10 +187,10 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Verifies that the Editions property of the Book class cannot be null.
+        /// Verifies that the Editions property of the Book class can be null.
         /// </summary>
         [TestMethod]
-        public void EditionsShouldNotBeNull()
+        public void EditionsCanBeNull()
         {
             // Arrange
             var book = new Book();
@@ -203,9 +203,8 @@ namespace TestDomainModel
             var validationResults = new List<ValidationResult>();
             var isValid = Validator.TryValidateProperty(book.Editions, validationContext, validationResults);
 
-            Assert.IsFalse(isValid);
-            Assert.AreEqual(1, validationResults.Count);
-            Assert.AreEqual("The Editions collection cannot be null", validationResults[0].ErrorMessage);
+            Assert.IsTrue(isValid);
+            Assert.AreEqual(0, validationResults.Count);
         }
 
         /// <summary>
@@ -253,10 +252,10 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Verifies that the Authors property of the Book class cannot be null.
+        /// Verifies that the Authors property of the Book class can be null.
         /// </summary>
         [TestMethod]
-        public void AuthorsShouldNotBeNull()
+        public void AuthorsCanBeNull()
         {
             // Arrange
             var book = new Book();
@@ -269,9 +268,8 @@ namespace TestDomainModel
             var validationResults = new List<ValidationResult>();
             var isValid = Validator.TryValidateProperty(book.Authors, validationContext, validationResults);
 
-            Assert.IsFalse(isValid);
-            Assert.AreEqual(1, validationResults.Count);
-            Assert.AreEqual("The Authors collection cannot be null", validationResults[0].ErrorMessage);
+            Assert.IsTrue(isValid);
+            Assert.AreEqual(0, validationResults.Count);
         }
 
         /// <summary>
