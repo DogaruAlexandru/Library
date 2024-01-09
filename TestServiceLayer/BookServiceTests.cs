@@ -50,9 +50,9 @@ namespace TestServiceLayer
             List<BookDomain> bookDomainList = new List<BookDomain> { new BookDomain { Id = 1, Name = "name1" } };
             this.books = new List<Book>
             {
-                new Book { Id = 0, Title = "title1",  Authors = authorList, BookDomains = bookDomainList},
-                new Book { Id = 1, Title = "title2",  Authors = authorList, BookDomains = bookDomainList},
-                new Book { Id = 2, Title = "title3",  BookDomains = bookDomainList, Description = "description"}
+                new Book { Id = 0, Title = "title1",  Authors = authorList, BookDomains = bookDomainList },
+                new Book { Id = 1, Title = "title2",  Authors = authorList, BookDomains = bookDomainList },
+                new Book { Id = 2, Title = "title3",  BookDomains = bookDomainList, Description = "description" }
             };
         }
 

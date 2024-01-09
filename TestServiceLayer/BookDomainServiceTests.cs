@@ -215,13 +215,13 @@ namespace TestServiceLayer
             {
                 // Arrange
                 BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(this.bookDomainDataService);
-                BookDomain BookDomain = new BookDomain { Id = 10, Name = "name" };
+                BookDomain bookDomain = new BookDomain { Id = 10, Name = "name" };
 
                 // Act
-                servicesImplementation.AddBookDomain(BookDomain);
+                servicesImplementation.AddBookDomain(bookDomain);
 
                 // Assert
-                Assert.IsNotNull(this.bookDomains.First(a => a.Id == BookDomain.Id));
+                Assert.IsNotNull(this.bookDomains.First(a => a.Id == bookDomain.Id));
                 Assert.AreEqual(this.bookDomains.Count, 4);
             }
         }
