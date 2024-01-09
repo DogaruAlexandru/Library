@@ -458,7 +458,7 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Verifies that the CanNotBorrow property of the Edition class must be equal to 0.
+        /// Verifies that the CanNotBorrow property of the Edition class can be set to 0.
         /// </summary>
         [TestMethod]
         public void CanNotBorrowCanBeZero()
@@ -479,16 +479,60 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Verifies that the CanNotBorrow property of the Edition class is valid when set to a positive value.
+        /// Verifies that the CanNotBorrow property of the Edition class cannot be set to null.
         /// </summary>
         [TestMethod]
-        public void ValidCanNotBorrowShouldPassValidation()
+        public void CanNotBorrowCannotBeNull()
         {
             // Arrange
             var edition = new Edition();
 
             // Act
-            edition.CanNotBorrow = 5; // Set a valid value
+            edition.CanNotBorrow = null;
+
+            // Assert
+            var validationContext = new ValidationContext(edition) { MemberName = nameof(Edition.CanNotBorrow) };
+            var validationResults = new List<ValidationResult>();
+            var isValid = Validator.TryValidateProperty(edition.CanNotBorrow, validationContext, validationResults);
+
+            Assert.IsFalse(isValid);
+            Assert.AreEqual(1, validationResults.Count);
+            Assert.AreEqual("The CanNotBorrow cannot be null", validationResults[0].ErrorMessage);
+        }
+
+        /// <summary>
+        /// Verifies that the CanNotBorrow property of the Edition class cannot be set to a value below 0.
+        /// </summary>
+        [TestMethod]
+        public void CanNotBorrowCannotBeBelowZero()
+        {
+            // Arrange
+            var edition = new Edition();
+
+            // Act
+            edition.CanNotBorrow = -1;
+
+            // Assert
+            var validationContext = new ValidationContext(edition) { MemberName = nameof(Edition.CanNotBorrow) };
+            var validationResults = new List<ValidationResult>();
+            var isValid = Validator.TryValidateProperty(edition.CanNotBorrow, validationContext, validationResults);
+
+            Assert.IsFalse(isValid);
+            Assert.AreEqual(1, validationResults.Count);
+            Assert.AreEqual("The CanNotBorrow must be above 0", validationResults[0].ErrorMessage);
+        }
+
+        /// <summary>
+        /// Verifies that the CanNotBorrow property of the Edition class can be set to a value above 0.
+        /// </summary>
+        [TestMethod]
+        public void CanNotBorrowCanBeAboveZero()
+        {
+            // Arrange
+            var edition = new Edition();
+
+            // Act
+            edition.CanNotBorrow = 1;
 
             // Assert
             var validationContext = new ValidationContext(edition) { MemberName = nameof(Edition.CanNotBorrow) };
@@ -500,7 +544,7 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Verifies that the CanBorrow property of the Edition class must be equal to 0.
+        /// Verifies that the CanBorrow property of the Edition class can be set to 0.
         /// </summary>
         [TestMethod]
         public void CanBorrowCanBeZero()
@@ -521,16 +565,60 @@ namespace TestDomainModel
         }
 
         /// <summary>
-        /// Verifies that the CanBorrow property of the Edition class is valid when set to a positive value.
+        /// Verifies that the CanBorrow property of the Edition class cannot be set to null.
         /// </summary>
         [TestMethod]
-        public void ValidCanBorrowShouldPassValidation()
+        public void CanBorrowCannotBeNull()
         {
             // Arrange
             var edition = new Edition();
 
             // Act
-            edition.CanBorrow = 5; // Set a valid value
+            edition.CanBorrow = null;
+
+            // Assert
+            var validationContext = new ValidationContext(edition) { MemberName = nameof(Edition.CanBorrow) };
+            var validationResults = new List<ValidationResult>();
+            var isValid = Validator.TryValidateProperty(edition.CanBorrow, validationContext, validationResults);
+
+            Assert.IsFalse(isValid);
+            Assert.AreEqual(1, validationResults.Count);
+            Assert.AreEqual("The CanBorrow cannot be null", validationResults[0].ErrorMessage);
+        }
+
+        /// <summary>
+        /// Verifies that the CanBorrow property of the Edition class cannot be set to a value below 0.
+        /// </summary>
+        [TestMethod]
+        public void CanBorrowCannotBeBelowZero()
+        {
+            // Arrange
+            var edition = new Edition();
+
+            // Act
+            edition.CanBorrow = -1;
+
+            // Assert
+            var validationContext = new ValidationContext(edition) { MemberName = nameof(Edition.CanBorrow) };
+            var validationResults = new List<ValidationResult>();
+            var isValid = Validator.TryValidateProperty(edition.CanBorrow, validationContext, validationResults);
+
+            Assert.IsFalse(isValid);
+            Assert.AreEqual(1, validationResults.Count);
+            Assert.AreEqual("The CanBorrow must be above 0", validationResults[0].ErrorMessage);
+        }
+
+        /// <summary>
+        /// Verifies that the CanBorrow property of the Edition class can be set to a value above 0.
+        /// </summary>
+        [TestMethod]
+        public void CanBorrowCanBeAboveZero()
+        {
+            // Arrange
+            var edition = new Edition();
+
+            // Act
+            edition.CanBorrow = 1;
 
             // Assert
             var validationContext = new ValidationContext(edition) { MemberName = nameof(Edition.CanBorrow) };

@@ -98,13 +98,15 @@ namespace DomainModel
         /// Gets or sets the maximum number of copies that cannot be borrowed for the edition.
         /// </summary>
         [Required(ErrorMessage = "The CanNotBorrow cannot be null")]
-        public uint CanNotBorrow { get; set; }
+        [Range(0, uint.MaxValue, ErrorMessage = "The CanNotBorrow must be above 0")]
+        public int? CanNotBorrow { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of copies that can be borrowed for the edition.
         /// </summary>
         [Required(ErrorMessage = "The CanBorrow cannot be null")]
-        public uint CanBorrow { get; set; }
+        [Range(0, uint.MaxValue, ErrorMessage = "The CanBorrow must be above 0")]
+        public int? CanBorrow { get; set; }
 
         /// <summary>
         /// Gets or sets the book associated with the edition.
