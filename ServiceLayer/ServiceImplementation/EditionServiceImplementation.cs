@@ -25,7 +25,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <summary>
         /// Initializes a new instance of the <see cref="EditionServiceImplementation"/> class.
         /// </summary>
-        /// <param name="authorDataService">The data service for editions.</param>
+        /// <param name="editionDataService">The data service for editions.</param>
         public EditionServiceImplementation(IEditionDataService editionDataService)
         {
             this.EditionDataService = editionDataService;

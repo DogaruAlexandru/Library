@@ -33,7 +33,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <summary>
         /// Initializes a new instance of the <see cref="BorrowedBookServicesImplementation"/> class.
         /// </summary>
-        /// <param name="authorDataService">The data service for borrowedBooks.</param>
+        /// <param name="borrowedBookDataService">The data service for borrowedBooks.</param>
         public BorrowedBookServicesImplementation(IBorrowedBookDataService borrowedBookDataService)
         {
             this.BorrowedBookDataService = borrowedBookDataService;

@@ -25,7 +25,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonServiceImplementation"/> class.
         /// </summary>
-        /// <param name="authorDataService">The data service for persons.</param>
+        /// <param name="personDataService">The data service for persons.</param>
         public PersonServiceImplementation(IPersonDataService personDataService)
         {
             this.PersonDataService = personDataService;

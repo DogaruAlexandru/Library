@@ -28,7 +28,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <summary>
         /// Initializes a new instance of the <see cref="BookServicesImplementation"/> class.
         /// </summary>
-        /// <param name="authorDataService">The data service for books.</param>
+        /// <param name="bookDataService">The data service for books.</param>
         public BookServicesImplementation(IBookDataService bookDataService)
         {
             this.BookDataService = bookDataService;

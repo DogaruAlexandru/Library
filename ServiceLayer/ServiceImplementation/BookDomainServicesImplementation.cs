@@ -23,7 +23,7 @@ namespace ServiceLayer.ServiceImplementation
         private static readonly ILog Log = LogManager.GetLogger(typeof(BookDomainServicesImplementation));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthorServicesImplementation"/> class.
+        /// Initializes a new instance of the <see cref="BookDomainServicesImplementation"/> class.
         /// </summary>
         /// <param name="bookDomainDataService">The data service for bookDomains.</param>
         public BookDomainServicesImplementation(IBookDomainDataService bookDomainDataService)
@@ -34,7 +34,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <summary>
         /// Gets or sets the data service for bookDomains.
         /// </summary>
-        private IBookDomainDataService BookDomainService {  get; set; }
+        private IBookDomainDataService BookDomainService { get; set; }
 
         /// <summary>
         /// Adds a new book domain.
