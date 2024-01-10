@@ -29,9 +29,11 @@ namespace ServiceLayer.ServiceImplementation
         /// Initializes a new instance of the <see cref="BookServicesImplementation"/> class.
         /// </summary>
         /// <param name="bookDataService">The data service for books.</param>
-        public BookServicesImplementation(IBookDataService bookDataService)
+        /// <param name="bookDomainDataService">The data service for bookDomain.</param>
+        public BookServicesImplementation(IBookDataService bookDataService, IBookDomainDataService bookDomainDataService)
         {
             this.BookDataService = bookDataService;
+            this.BookDomainDataService = bookDomainDataService;
         }
 
         /// <summary>
@@ -40,12 +42,24 @@ namespace ServiceLayer.ServiceImplementation
         private IBookDataService BookDataService { get; set; }
 
         /// <summary>
+        /// Gets or sets the data service for booksDomain.
+        /// </summary>
+        private IBookDomainDataService BookDomainDataService { get; set; }
+
+        /// <summary>
         /// Adds a new book to the system.
         /// </summary>
         /// <param name="book">The book to be added.</param>
         public void AddBook(Book book)
         {
-            this.ValidateEntity(book);
+            try
+            {
+                this.ValidateEntity(book);
+            }
+            catch (ValidationException ex)
+            {
+                throw ex;
+            }
 
             Log.Info($"Adding Book with ID: {book.Id}");
 
@@ -92,7 +106,14 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="book">The book to be updated.</param>
         public void UpdateBook(Book book)
         {
-            this.ValidateEntity(book);
+            try
+            {
+                this.ValidateEntity(book);
+            }
+            catch (ValidationException ex)
+            {
+                throw ex;
+            }
 
             Log.Info($"Updating Book with ID: {book.Id}");
 
@@ -102,12 +123,19 @@ namespace ServiceLayer.ServiceImplementation
         /// <inheritdoc/>
         public override void ValidateEntity<T>(T entity)
         {
-            base.ValidateEntity(entity);
+            try
+            {
+                base.ValidateEntity(entity);
 
-            Book book = entity as Book;
+                Book book = entity as Book;
 
-            this.VerifyDifferentDomainRoots(book);
-            this.VerifyLessBookDomainsThenMax(book);
+                this.VerifyDifferentDomainRoots(book);
+                this.VerifyLessBookDomainsThenMax(book);
+            }
+            catch (ValidationException ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -129,7 +157,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="book">The book to be validated.</param>
         private void VerifyDifferentDomainRoots(Book book)
         {
-            IBookDomainService service = new BookDomainServicesImplementation(DAOFactoryMethod.CurrentDAOFactory.BookDomainDataService);
+            IBookDomainService service = new BookDomainServicesImplementation(this.BookDomainDataService);
 
             List<int> domainsRoots = new List<int>();
             foreach (var bookDomain in book.BookDomains)

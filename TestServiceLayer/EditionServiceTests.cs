@@ -214,7 +214,17 @@ namespace TestServiceLayer
             {
                 // Arrange
                 EditionServiceImplementation servicesImplementation = new EditionServiceImplementation(this.editionDataService);
-                Edition edition = new Edition { Id = 10, Name = "name" };
+                Edition edition = new Edition
+                {
+                    Id = 10,
+                    Name = "name",
+                    Book = this.editions.First().Book,
+                    CanBorrow = 10,
+                    CanNotBorrow = 5,
+                    PageCount = 244,
+                    Publisher = this.editions.First().Publisher,
+                    Type = BookType.CaseWrapHardcover
+                };
 
                 // Act
                 servicesImplementation.AddEdition(edition);
@@ -244,7 +254,17 @@ namespace TestServiceLayer
             {
                 // Arrange
                 EditionServiceImplementation servicesImplementation = new EditionServiceImplementation(this.editionDataService);
-                Edition edition = new Edition { Id = 10, Name = "name" };
+                Edition edition = new Edition
+                {
+                    Id = 10,
+                    Name = "name",
+                    Book = this.editions.First().Book,
+                    CanBorrow = 10,
+                    CanNotBorrow = 5,
+                    PageCount = 244,
+                    Publisher = this.editions.First().Publisher,
+                    Type = BookType.CaseWrapHardcover
+                };
                 this.editions.Clear();
 
                 // Act
@@ -349,7 +369,17 @@ namespace TestServiceLayer
             {
                 // Arrange
                 EditionServiceImplementation servicesImplementation = new EditionServiceImplementation(this.editionDataService);
-                Edition editionToUpdate = this.editions.First(); // Select the first edition for updating
+                Edition editionToUpdate = new Edition
+                {
+                    Id = this.editions.First().Id,
+                    Name = this.editions.First().Name,
+                    Book = this.editions.First().Book,
+                    CanBorrow = this.editions.First().CanBorrow + 10,
+                    CanNotBorrow = this.editions.First().CanNotBorrow + 5,
+                    PageCount = this.editions.First().PageCount,
+                    Publisher = this.editions.First().Publisher,
+                    Type = this.editions.First().Type
+                };
 
                 // Act
                 servicesImplementation.UpdateEdition(editionToUpdate);
@@ -384,10 +414,20 @@ namespace TestServiceLayer
             {
                 // Arrange
                 EditionServiceImplementation servicesImplementation = new EditionServiceImplementation(this.editionDataService);
-                Edition nonExistingEdition = new Edition { Id = 99, Name = "NonExistingEdition" };
+                Edition editionToUpdate = new Edition
+                {
+                    Id = 99,
+                    Name = this.editions.First().Name,
+                    Book = this.editions.First().Book,
+                    CanBorrow = this.editions.First().CanBorrow + 10,
+                    CanNotBorrow = this.editions.First().CanNotBorrow + 5,
+                    PageCount = this.editions.First().PageCount,
+                    Publisher = this.editions.First().Publisher,
+                    Type = this.editions.First().Type
+                };
 
                 // Assert and Act
-                Assert.ThrowsException<Exception>(() => servicesImplementation.UpdateEdition(nonExistingEdition));
+                Assert.ThrowsException<Exception>(() => servicesImplementation.UpdateEdition(editionToUpdate));
             }
         }
     }

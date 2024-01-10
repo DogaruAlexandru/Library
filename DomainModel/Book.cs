@@ -33,6 +33,9 @@ namespace DomainModel
         [StringLength(100, MinimumLength = 1, ErrorMessage = "The length must be between 1 and 100")]
         public string Description { get; set; }
 
+        /// <summary>
+        /// Gets or sets the collection of editions associated with the book.
+        /// </summary>
         public virtual ICollection<Edition> Editions { get; set; }
 
         /// <summary>
@@ -42,6 +45,9 @@ namespace DomainModel
         [MinLength(1, ErrorMessage = "At least one BookDomain is required")]
         public virtual ICollection<BookDomain> BookDomains { get; set; }
 
+        /// <summary>
+        /// Gets or sets the collection of authors who wrote the book.
+        /// </summary>
         public virtual ICollection<Author> Authors { get; set; }
     }
 }

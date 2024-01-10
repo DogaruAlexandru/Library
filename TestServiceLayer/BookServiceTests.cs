@@ -8,6 +8,8 @@ namespace TestServiceLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Configuration;
     using System.Linq;
     using DataMapper;
     using DomainModel;
@@ -34,9 +36,19 @@ namespace TestServiceLayer
         private IBookDataService bookDataService;
 
         /// <summary>
+        /// Represents the mock service for accessing Book-related data during unit tests.
+        /// </summary>
+        private IBookDomainDataService bookDomainDataService;
+
+        /// <summary>
         /// Represents a collection of books in the application.
         /// </summary>
         private List<Book> books;
+
+        /// <summary>
+        /// Represents a collection of bookDomains in the application.
+        /// </summary>
+        private List<BookDomain> bookDomains;
 
         /// <summary>
         /// Initializes test resources before each test method is executed.
@@ -46,13 +58,21 @@ namespace TestServiceLayer
         {
             this.mocks = new MockRepository();
             this.bookDataService = this.mocks.StrictMock<IBookDataService>();
+            this.bookDomainDataService = this.mocks.StrictMock<IBookDomainDataService>();
+
             List<Author> authorList = new List<Author> { new Author { Id = 1, Name = "name1" } };
-            List<BookDomain> bookDomainList = new List<BookDomain> { new BookDomain { Id = 1, Name = "name1" } };
+            this.bookDomains = new List<BookDomain>
+            {
+                new BookDomain { Id = 0, Name = "name1" },
+                new BookDomain { Id = 1, Name = "name2" },
+                new BookDomain { Id = 2, Name = "name3" }
+            };
+            this.bookDomains[2].ParentDomain = this.bookDomains[0];
             this.books = new List<Book>
             {
-                new Book { Id = 0, Title = "title1",  Authors = authorList, BookDomains = bookDomainList },
-                new Book { Id = 1, Title = "title2",  Authors = authorList, BookDomains = bookDomainList },
-                new Book { Id = 2, Title = "title3",  BookDomains = bookDomainList, Description = "description" }
+                new Book { Id = 0, Title = "title1",  Authors = authorList, BookDomains = new List<BookDomain> { this.bookDomains[0] } },
+                new Book { Id = 1, Title = "title2",  Authors = authorList, BookDomains = new List<BookDomain> { this.bookDomains[1] } },
+                new Book { Id = 2, Title = "title3",  BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[2] }, Description = "description" }
             };
         }
 
@@ -70,7 +90,7 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
 
                 // Act
                 var list = servicesImplementation.GetAllBooks();
@@ -95,7 +115,7 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
                 this.books.Clear();
 
                 // Act
@@ -124,7 +144,7 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
                 int existingBookId = 2;
 
                 // Act
@@ -156,7 +176,7 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
                 int existingBookId = 1;
                 this.books.Clear();
 
@@ -186,7 +206,7 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
                 int nonExistingBookId = 99;
 
                 // Act
@@ -205,6 +225,12 @@ namespace TestServiceLayer
         {
             using (this.mocks.Record())
             {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
                 Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
                 {
                     Book authorParameter = (Book)call.Arguments[0];
@@ -215,8 +241,8 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
-                Book book = new Book { Id = 10, Title = "title", BookDomains = new List<BookDomain> { new BookDomain { Id = 10, Name = "Domain" } }, Editions = new List<Edition>() };
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book book = new Book { Id = 10, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0] }, Editions = new List<Edition>() };
 
                 // Act
                 servicesImplementation.AddBook(book);
@@ -235,6 +261,12 @@ namespace TestServiceLayer
         {
             using (this.mocks.Record())
             {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
                 Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
                 {
                     Book authorParameter = (Book)call.Arguments[0];
@@ -245,8 +277,8 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
-                Book book = new Book { Id = 10, Title = "title", BookDomains = new List<BookDomain> { new BookDomain { Id = 10, Name = "Domain" } }, Editions = new List<Edition>() };
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book book = new Book { Id = 10, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0] }, Editions = new List<Edition>() };
                 this.books.Clear();
 
                 // Act
@@ -282,7 +314,7 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
                 Book authorToDelete = this.books.First(); // Select the first Book for deletion
 
                 // Act
@@ -318,8 +350,8 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
-                Book nonExistingBook = new Book { Id = 99, Title = "NonExistingBook", BookDomains = new List<BookDomain> { new BookDomain { Id = 10, Name = "Domain" } }, Editions = new List<Edition>() };
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book nonExistingBook = new Book { Id = 99, Title = "NonExistingBook", BookDomains = new List<BookDomain> { this.bookDomains[0] }, Editions = new List<Edition>() };
 
                 // Assert and Act
                 Assert.ThrowsException<Exception>(() => servicesImplementation.DeleteBook(nonExistingBook));
@@ -334,6 +366,12 @@ namespace TestServiceLayer
         {
             using (this.mocks.Record())
             {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
                 Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
                 {
                     Book authorParameter = (Book)call.Arguments[0];
@@ -350,14 +388,14 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
-                Book authorToUpdate = this.books.First(); // Select the first Book for updating
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book book = this.books.First(); // Select the first Book for updating
 
                 // Act
-                servicesImplementation.UpdateBook(authorToUpdate);
+                servicesImplementation.UpdateBook(book);
 
                 // Assert
-                Assert.IsTrue(this.books.Contains(authorToUpdate));
+                Assert.IsTrue(this.books.Contains(book));
             }
         }
 
@@ -369,6 +407,12 @@ namespace TestServiceLayer
         {
             using (this.mocks.Record())
             {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
                 Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
                 {
                     Book authorParameter = (Book)call.Arguments[0];
@@ -385,11 +429,157 @@ namespace TestServiceLayer
             using (this.mocks.Playback())
             {
                 // Arrange
-                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService);
-                Book nonExistingBook = new Book { Id = 99, Title = "NonExistingBook", BookDomains = new List<BookDomain> { new BookDomain { Id = 10, Name = "Domain" } }, Editions = new List<Edition>() };
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book nonExistingBook = new Book { Id = 99, Title = "NonExistingBook", BookDomains = new List<BookDomain> { this.bookDomains[0] }, Editions = new List<Edition>() };
 
                 // Assert and Act
                 Assert.ThrowsException<Exception>(() => servicesImplementation.UpdateBook(nonExistingBook));
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="BookServicesImplementation.AddBook"/> method to ensure that a <see cref="ValidationException"/> is thrown
+        /// when attempting to add a book with domains having the same root domain.
+        /// </summary>
+        [TestMethod]
+        public void TestBookCanNotHaveDomeninsWithSameDomainRootOnAdd()
+        {
+            using (this.mocks.Record())
+            {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
+                Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
+                {
+                    Book authorParameter = (Book)call.Arguments[0];
+                    this.books.Add(authorParameter);
+                }).Repeat.Any();
+            }
+
+            using (this.mocks.Playback())
+            {
+                // Arrange
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book book = new Book { Id = 10, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[2] } };
+
+                // Act and Assert
+                Assert.ThrowsException<ValidationException>(() => servicesImplementation.AddBook(book), "The book domains cannot have the same root domain");
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="BookServicesImplementation.AddBook"/> method to ensure that a <see cref="ValidationException"/> is thrown
+        /// when attempting to add a book with too many domains.
+        /// </summary>
+        [TestMethod]
+        public void TestBookCanNotHaveTooManyDomainsOnAdd()
+        {
+            using (this.mocks.Record())
+            {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
+                Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
+                {
+                    Book authorParameter = (Book)call.Arguments[0];
+                    this.books.Add(authorParameter);
+                }).Repeat.Any();
+            }
+
+            using (this.mocks.Playback())
+            {
+                // Arrange
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book book = new Book { Id = 10, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[1], new BookDomain { Id = 4, Name = "asd" }, new BookDomain { Id = 5, Name = "asdewe" } } };
+                int maxDomainCount = Convert.ToInt32(ConfigurationManager.AppSettings["DOMENII"]);
+
+                // Act and Assert
+                Assert.ThrowsException<ValidationException>(() => servicesImplementation.AddBook(book), $"A Book cannot have more than {maxDomainCount} BookDomains");
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="BookServicesImplementation.UpdateBook"/> method to ensure that a <see cref="ValidationException"/> is thrown
+        /// when attempting to update a book with domains having the same root domain.
+        /// </summary>
+        [TestMethod]
+        public void TestBookCanNotHaveDomeninsWithSameDomainRootOnUpdate()
+        {
+            using (this.mocks.Record())
+            {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
+                Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
+                {
+                    Book authorParameter = (Book)call.Arguments[0];
+                    int index = this.books.FindIndex(a => a.Id == authorParameter.Id);
+                    if (index == -1)
+                    {
+                        throw new Exception("Book not found");
+                    }
+
+                    books[index] = authorParameter;
+                }).Repeat.Any();
+            }
+
+            using (this.mocks.Playback())
+            {
+                // Arrange
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book book = new Book { Id = 1, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[2] } };
+
+                // Act and Assert
+                Assert.ThrowsException<ValidationException>(() => servicesImplementation.UpdateBook(book), "The book domains cannot have the same root domain");
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="BookServicesImplementation.UpdateBook"/> method to ensure that a <see cref="ValidationException"/> is thrown
+        /// when attempting to update a book with too many domains.
+        /// </summary>
+        [TestMethod]
+        public void TestBookCanNotHaveTooManyDomainsOnUpdate()
+        {
+            using (this.mocks.Record())
+            {
+                Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
+                {
+                    int idParameter = (int)call.Arguments[0];
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                }).Repeat.Any();
+
+                Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
+                {
+                    Book authorParameter = (Book)call.Arguments[0];
+                    int index = this.books.FindIndex(a => a.Id == authorParameter.Id);
+                    if (index == -1)
+                    {
+                        throw new Exception("Book not found");
+                    }
+
+                    books[index] = authorParameter;
+                }).Repeat.Any();
+            }
+
+            using (this.mocks.Playback())
+            {
+                // Arrange
+                BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
+                Book book = new Book { Id = 1, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[1], new BookDomain { Id = 4, Name = "asd" }, new BookDomain { Id = 5, Name = "asdewe" } } };
+                int maxDomainCount = Convert.ToInt32(ConfigurationManager.AppSettings["DOMENII"]);
+
+                // Act and Assert
+                Assert.ThrowsException<ValidationException>(() => servicesImplementation.UpdateBook(book), $"A Book cannot have more than {maxDomainCount} BookDomains");
             }
         }
     }
