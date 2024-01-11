@@ -241,6 +241,7 @@ namespace ServiceLayer.ServiceImplementation
 
             BorrowedBook borrowedBook = entity as BorrowedBook;
 
+            this.VerifyStuffPersonIsTypeStuff(borrowedBook);
             this.VerifyDates(borrowedBook);
             this.VerifyCanBorrowMoreBooks(borrowedBook);
 
@@ -275,9 +276,17 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="borrowedBooks">The list of borrowed books to be validated independently.</param>
         private void VerifyIndependentValidation(List<BorrowedBook> borrowedBooks)
         {
-            foreach (var borrowedBook in borrowedBooks)
+            int i = 0;
+            try
             {
-                this.ValidateEntity(borrowedBook);
+                for (i = 0; i < borrowedBooks.Count; i++)
+                {
+                    this.ValidateEntity(borrowedBooks[i]);
+                }
+            }
+            catch (ValidationException ex)
+            {
+                throw new ValidationException($"Validation failed at index {i}; " + ex.Message);
             }
         }
 
@@ -327,11 +336,6 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="borrowedBook">The BorrowedBook instance to be validated.</param>
         private void VerifyStuffCanBorrow(BorrowedBook borrowedBook)
         {
-            if (borrowedBook.Staff.Type == PersonType.Reader)
-            {
-                throw new ValidationException("A reader cannot borrow a book to another reader");
-            }
-
             int maxDay = Convert.ToInt32(ConfigurationManager.AppSettings["PERSIMP"]);
             int borrowedTodayCount = this.CountBooksBorrowedBySuffOnDate(borrowedBook.Staff, DateTime.Today);
             if (borrowedTodayCount >= maxDay)
@@ -386,7 +390,7 @@ namespace ServiceLayer.ServiceImplementation
             DateTime date = DateTime.Today.AddMonths(-3);
             List<int> list = this.GetDueDateDifferencesForPersonAfterDate(borrowedBook.Reader, date);
             int extraTaken = list.Select(element => element - BorrowPeriodDays).Sum();
-            if ((borrowedBook.DueDate - borrowedBook.BorrowDate).Days > BorrowPeriodDays && extraTaken >= limitExtraDays)
+            if (extraTaken >= limitExtraDays)
             {
                 throw new ValidationException("The limit for borrow time extensions in the interval has been reached");
             }
@@ -447,11 +451,6 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="borrowedBook">The BorrowedBook instance to be validated.</param>
         private void VerifyDates(BorrowedBook borrowedBook)
         {
-            if (borrowedBook == null)
-            {
-                return;
-            }
-
             if (borrowedBook.BorrowDate > borrowedBook.DueDate)
             {
                 throw new ValidationException("The BorrowDate cannot be later than the DueDate");
@@ -465,6 +464,19 @@ namespace ServiceLayer.ServiceImplementation
             if (borrowedBook.BorrowDate > borrowedBook.ReturnedDate)
             {
                 throw new ValidationException("The BorrowDate cannot be later than the ReturnedDate");
+            }
+        }
+
+        /// <summary>
+        /// Verifies that the staff member is of type "Stuff" and not "Reader" when borrowing or updating a book.
+        /// </summary>
+        /// <param name="borrowedBook">The borrowed book to be verified.</param>
+        /// <exception cref="ValidationException">Thrown if the staff member is a reader.</exception>
+        private void VerifyStuffPersonIsTypeStuff(BorrowedBook borrowedBook)
+        {
+            if (borrowedBook.Staff.Type == PersonType.Reader)
+            {
+                throw new ValidationException("A reader cannot borrow a book to another reader");
             }
         }
 

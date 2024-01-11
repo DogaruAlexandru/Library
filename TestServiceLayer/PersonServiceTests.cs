@@ -8,6 +8,7 @@ namespace TestServiceLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using DataMapper;
     using DomainModel;
@@ -20,6 +21,7 @@ namespace TestServiceLayer
     /// <summary>
     /// Represents unit tests for the <see cref="PersonServiceImplementation"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     [TestClass]
     public class PersonServiceTests
     {

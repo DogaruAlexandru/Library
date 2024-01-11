@@ -36,19 +36,7 @@ namespace ServiceLayer.ServiceImplementation
 
             if (!isValid)
             {
-                this.HandleValidationErrors(validationResults);
-            }
-        }
-
-        /// <summary>
-        /// Handles validation errors by throwing a <see cref="ValidationException"/>.
-        /// </summary>
-        /// <param name="validationResults">The list of validation results.</param>
-        protected virtual void HandleValidationErrors(List<ValidationResult> validationResults)
-        {
-            foreach (var validationResult in validationResults)
-            {
-                throw new ValidationException(validationResult.ErrorMessage);
+                throw new ValidationException(validationResults[0].ErrorMessage);
             }
         }
     }

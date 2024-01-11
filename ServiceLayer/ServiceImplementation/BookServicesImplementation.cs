@@ -52,14 +52,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="book">The book to be added.</param>
         public void AddBook(Book book)
         {
-            try
-            {
-                this.ValidateEntity(book);
-            }
-            catch (ValidationException ex)
-            {
-                throw ex;
-            }
+            this.ValidateEntity(book);
 
             Log.Info($"Adding Book with ID: {book.Id}");
 
@@ -106,14 +99,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="book">The book to be updated.</param>
         public void UpdateBook(Book book)
         {
-            try
-            {
-                this.ValidateEntity(book);
-            }
-            catch (ValidationException ex)
-            {
-                throw ex;
-            }
+            this.ValidateEntity(book);
 
             Log.Info($"Updating Book with ID: {book.Id}");
 
@@ -123,19 +109,12 @@ namespace ServiceLayer.ServiceImplementation
         /// <inheritdoc/>
         public override void ValidateEntity<T>(T entity)
         {
-            try
-            {
-                base.ValidateEntity(entity);
+            base.ValidateEntity(entity);
 
-                Book book = entity as Book;
+            Book book = entity as Book;
 
-                this.VerifyDifferentDomainRoots(book);
-                this.VerifyLessBookDomainsThenMax(book);
-            }
-            catch (ValidationException ex)
-            {
-                throw ex;
-            }
+            this.VerifyDifferentDomainRoots(book);
+            this.VerifyLessBookDomainsThenMax(book);
         }
 
         /// <summary>

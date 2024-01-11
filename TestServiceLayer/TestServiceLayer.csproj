@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AuthorServicesTests.cs" />
     <Compile Include="BookDomainServiceTests.cs" />
+    <Compile Include="BaseServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
