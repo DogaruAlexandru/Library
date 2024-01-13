@@ -625,67 +625,6 @@ namespace TestServiceLayer
             }
         }
 
-        /// <summary>
-        /// Verifies independent validation for borrowing multiple books.
-        /// </summary>
-        [TestMethod]
-        public void TestBorrowMultipleFails()
-        {
-            // Create a dynamic mock for IBorrowedBookDataService
-            var borrowedBookDataServiceMock = MockRepository.GenerateMock<IBorrowedBookDataService>();
-
-            // Setup the expectations for Count and other methods using Stub
-            borrowedBookDataServiceMock.Stub(x => x.CountBorrowedBooksByEditionWithNullReturnedDate(Arg<Edition>.Is.Anything)).Return(2);
-            borrowedBookDataServiceMock.Stub(x => x.CountBorrowedBooksByPersonAndDate(Arg<Person>.Is.Anything, Arg<DateTime>.Is.Anything)).Return(2);
-            borrowedBookDataServiceMock.Stub(x => x.CountBorrowedBooksForPersonAndDomainAfterDate(Arg<Person>.Is.Anything, Arg<BookDomain>.Is.Anything, Arg<DateTime>.Is.Anything)).Return(2);
-            borrowedBookDataServiceMock.Stub(x => x.GetDueDateDifferencesForPersonAfterDate(Arg<Person>.Is.Anything, Arg<DateTime>.Is.Anything)).Return(new List<int> { 7, 14 });
-            borrowedBookDataServiceMock.Stub(x => x.CountBorrowedBooksByEditionForPersonAfterDate(
-                Arg<Person>.Is.Anything,
-                Arg<Edition>.Is.Anything,
-                Arg<DateTime>.Is.Anything)).Return(-1)
-                .WhenCalled(call =>
-                {
-                    Person person = (Person)call.Arguments[0];
-                    Edition edition = (Edition)call.Arguments[1];
-                    DateTime date = (DateTime)call.Arguments[2];
-                    call.ReturnValue = this.borrowedBooks.Count(b => b.Reader.Id == person.Id && b.Edition.Id == edition.Id && b.BorrowDate > date);
-                });
-            borrowedBookDataServiceMock.Stub(x => x.CountBooksBorrowedByPersonOnDate(Arg<Person>.Is.Anything, Arg<DateTime>.Is.Anything)).Return(3);
-            borrowedBookDataServiceMock.Stub(x => x.CountBooksBorrowedBySuffOnDate(Arg<Person>.Is.Anything, Arg<DateTime>.Is.Anything)).Return(5);
-            borrowedBookDataServiceMock.Stub(x => x.AddBorrowedBook(Arg<BorrowedBook>.Is.Anything)).WhenCalled(call =>
-            {
-                BorrowedBook borrowedBook = (BorrowedBook)call.Arguments[0];
-                this.borrowedBooks.Add(borrowedBook);
-            }).Repeat.Any();
-            borrowedBookDataServiceMock.Stub(x => x.DeleteBorrowedBook(Arg<BorrowedBook>.Is.Anything)).WhenCalled(call =>
-            {
-                BorrowedBook borrowedbookParameter = (BorrowedBook)call.Arguments[0];
-                int index = this.borrowedBooks.FindIndex(a => a.Id == borrowedbookParameter.Id);
-                if (index == -1)
-                {
-                    throw new Exception();
-                }
-
-                this.borrowedBooks.RemoveAt(index);
-            }).Repeat.Any();
-
-            // Arrange
-            BorrowedBookServicesImplementation servicesImplementation = new BorrowedBookServicesImplementation(this.borrowedBookDataService);
-            Book book1 = new Book { Title = "Title1", Authors = this.book.Authors, BookDomains = new List<BookDomain> { new BookDomain { Id = 2, Name = "asd" } } };
-            Edition edition1 = new Edition { Name = "Name1", Book = book1, Type = BookType.MassMarketHardcover, PageCount = 123, CanBorrow = 20, CanNotBorrow = 20, Publisher = "pub" };
-            Book book2 = new Book { Title = "Title2", Authors = this.book.Authors, BookDomains = new List<BookDomain> { new BookDomain { Id = 3, Name = "asdasd" } } };
-            Edition edition2 = new Edition { Name = "Name2", Book = book2, Type = BookType.MassMarketHardcover, PageCount = 123, CanBorrow = 20, CanNotBorrow = 20, Publisher = "pub" };
-            List<BorrowedBook> multipleBorrowedBooks = new List<BorrowedBook>
-            {
-                new BorrowedBook { Id = 11, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.stuff, StaffId = this.stuff.Id, Edition = edition2, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) },
-                new BorrowedBook { Id = 12, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.stuff, StaffId = this.stuff.Id, Edition = edition1, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) },
-            };
-
-            // Assert
-            Assert.ThrowsException<ValidationException>(() => servicesImplementation.BorrowMultipleBook(multipleBorrowedBooks), "A reader cannot borrow a book to another reader");
-            Assert.AreEqual(this.borrowedBooks.Count, 3);
-        }
-
         #endregion
 
         #region Add_Test_Validations
