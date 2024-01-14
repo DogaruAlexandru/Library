@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="202401052002266_commit.cs" company="Transilvania University of Brasov">
+// <copyright file="202401052002266_Commit.cs" company="Transilvania University of Brasov">
 //   Copyright (c) Dogaru Alexandru.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ namespace DataMapper.Migrations
         /// </summary>
         public override void Up()
         {
-            CreateTable(
+            this.CreateTable(
                 "dbo.Authors",
                 c => new
                     {
@@ -27,8 +27,8 @@ namespace DataMapper.Migrations
                         Name = c.String(nullable: false, maxLength: 100),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.Books",
                 c => new
                     {
@@ -37,8 +37,8 @@ namespace DataMapper.Migrations
                         Description = c.String(maxLength: 100),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.BookDomains",
                 c => new
                     {
@@ -49,8 +49,7 @@ namespace DataMapper.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.BookDomains", t => t.ParentDomain_Id)
                 .Index(t => t.ParentDomain_Id);
-            
-            CreateTable(
+            this.CreateTable(
                 "dbo.Editions",
                 c => new
                     {
@@ -63,8 +62,8 @@ namespace DataMapper.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Books", t => t.Book_Id)
                 .Index(t => t.Book_Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.BorrowedBooks",
                 c => new
                     {
@@ -80,8 +79,8 @@ namespace DataMapper.Migrations
                 .ForeignKey("dbo.People", t => t.Reader_Id, cascadeDelete: true)
                 .Index(t => t.Edition_Id)
                 .Index(t => t.Reader_Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.People",
                 c => new
                     {
@@ -95,8 +94,8 @@ namespace DataMapper.Migrations
                         Type = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.BookAuthors",
                 c => new
                     {
@@ -108,8 +107,8 @@ namespace DataMapper.Migrations
                 .ForeignKey("dbo.Authors", t => t.Author_Id, cascadeDelete: true)
                 .Index(t => t.Book_Id)
                 .Index(t => t.Author_Id);
-            
-            CreateTable(
+
+            this.CreateTable(
                 "dbo.BookDomainBooks",
                 c => new
                     {

@@ -228,8 +228,6 @@ namespace ServiceLayer.ServiceImplementation
             }
         }
 
-        #region Validations
-
         /// <summary>
         /// Validates an individual borrowed book entity.
         /// </summary>
@@ -323,7 +321,7 @@ namespace ServiceLayer.ServiceImplementation
         private void VerifyTooManyBorrowedAtOnce(List<BorrowedBook> borrowedBooks)
         {
             int multiplier = borrowedBooks[0].Reader.Type == PersonType.Reader ? 1 : 2;
-            int max = Convert.ToInt32(GetValueFromConfig<string>("C")) * multiplier;
+            int max = Convert.ToInt32(this.GetValueFromConfig<string>("C")) * multiplier;
             if (borrowedBooks.Count > max)
             {
                 throw new ValidationException($"Can borrow a maximum of {max} books at once");
@@ -336,7 +334,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="borrowedBook">The BorrowedBook instance to be validated.</param>
         private void VerifyStuffCanBorrow(BorrowedBook borrowedBook)
         {
-            int maxDay = Convert.ToInt32(GetValueFromConfig<string>("PERSIMP"));
+            int maxDay = Convert.ToInt32(this.GetValueFromConfig<string>("PERSIMP"));
             int borrowedTodayCount = this.CountBooksBorrowedBySuffOnDate(borrowedBook.Staff, DateTime.Today);
             if (borrowedTodayCount >= maxDay)
             {
@@ -355,7 +353,7 @@ namespace ServiceLayer.ServiceImplementation
                 return;
             }
 
-            int maxDay = Convert.ToInt32(GetValueFromConfig<string>("NCZ"));
+            int maxDay = Convert.ToInt32(this.GetValueFromConfig<string>("NCZ"));
             int borrowedTodayCount = this.CountBooksBorrowedByPersonOnDate(borrowedBook.Reader, DateTime.Today);
             if (borrowedTodayCount >= maxDay)
             {
@@ -370,7 +368,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="multiplier">The multiplier value for certain calculations.</param>
         private void VerifyBorrowedTooRecently(BorrowedBook borrowedBook, int multiplier)
         {
-            int period = Convert.ToInt32(GetValueFromConfig<string>("DELTA")) / multiplier;
+            int period = Convert.ToInt32(this.GetValueFromConfig<string>("DELTA")) / multiplier;
             DateTime date = DateTime.Today.AddDays(-period);
             int borrowInPeriod = this.CountBorrowedBooksByEditionForPersonAfterDate(borrowedBook.Reader, borrowedBook.Edition, date);
             if (borrowInPeriod > 0)
@@ -386,7 +384,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="multiplier">The multiplier value for certain calculations.</param>
         private void VerifyBorrowExtensionsReached(BorrowedBook borrowedBook, int multiplier)
         {
-            int limitExtraDays = Convert.ToInt32(GetValueFromConfig<string>("LIM")) * multiplier;
+            int limitExtraDays = Convert.ToInt32(this.GetValueFromConfig<string>("LIM")) * multiplier;
             DateTime date = DateTime.Today.AddMonths(-3);
             List<int> list = this.GetDueDateDifferencesForPersonAfterDate(borrowedBook.Reader, date);
             int extraTaken = list.Select(element => element - BorrowPeriodDays).Sum();
@@ -403,8 +401,8 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="multiplier">The multiplier value for certain calculations.</param>
         private void VerifyDomainLimitForPersonReached(BorrowedBook borrowedBook, int multiplier)
         {
-            int maxSameDomain = Convert.ToInt32(GetValueFromConfig<string>("D")) * multiplier;
-            int period = Convert.ToInt32(GetValueFromConfig<string>("L"));
+            int maxSameDomain = Convert.ToInt32(this.GetValueFromConfig<string>("D")) * multiplier;
+            int period = Convert.ToInt32(this.GetValueFromConfig<string>("L"));
             DateTime date = DateTime.Today.AddMonths(-period);
             foreach (var bookDomain in borrowedBook.Edition.Book.BookDomains)
             {
@@ -423,8 +421,8 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="multiplier">The multiplier value for certain calculations.</param>
         private void VerifyLimitForPersonReached(BorrowedBook borrowedBook, int multiplier)
         {
-            int maxBooksCanBorrow = Convert.ToInt32(GetValueFromConfig<string>("NMC")) * multiplier;
-            int period = Convert.ToInt32(GetValueFromConfig<string>("PER")) / multiplier;
+            int maxBooksCanBorrow = Convert.ToInt32(this.GetValueFromConfig<string>("NMC")) * multiplier;
+            int period = Convert.ToInt32(this.GetValueFromConfig<string>("PER")) / multiplier;
             DateTime date = DateTime.Today.AddDays(-period);
             int borrowedBooksCount = this.CountBorrowedSinceDateForPerson(borrowedBook.Reader, date);
             if (borrowedBooksCount >= maxBooksCanBorrow)
@@ -479,7 +477,5 @@ namespace ServiceLayer.ServiceImplementation
                 throw new ValidationException("A reader cannot borrow a book to another reader");
             }
         }
-
-        #endregion
     }
 }

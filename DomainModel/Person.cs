@@ -22,7 +22,7 @@ namespace DomainModel
         /// <summary>
         /// Represents personnel working in a library.
         /// </summary>
-        LibraryPersonnel
+        LibraryPersonnel,
     }
 
     /// <summary>

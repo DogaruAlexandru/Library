@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataMapper\DataMapper.csproj">
@@ -83,6 +84,10 @@
       <Project>{D8E04D66-CAF8-4722-A54C-D9057182F123}</Project>
       <Name>DomainModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />

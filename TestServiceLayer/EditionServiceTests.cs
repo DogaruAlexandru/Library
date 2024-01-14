@@ -53,7 +53,7 @@ namespace TestServiceLayer
             {
                 new Edition { Id = 0, Name = "name1", Book = book, Publisher = "asdasd", Type = BookType.LibraryBinding, PageCount = 123, CanBorrow = 23, CanNotBorrow = 23 },
                 new Edition { Id = 1, Name = "name2", Book = book, Publisher = "asd aasda", Type = BookType.DustJacket,  PageCount = 232, CanBorrow = 2, CanNotBorrow = 23 },
-                new Edition { Id = 2, Name = "name3", Book = book, Publisher = "asdasd", Type = BookType.TradeHardcover, PageCount = 431, CanBorrow = 0, CanNotBorrow = 2 }
+                new Edition { Id = 2, Name = "name3", Book = book, Publisher = "asdasd", Type = BookType.TradeHardcover, PageCount = 431, CanBorrow = 0, CanNotBorrow = 2 },
             };
         }
 
@@ -216,17 +216,7 @@ namespace TestServiceLayer
             {
                 // Arrange
                 EditionServiceImplementation servicesImplementation = new EditionServiceImplementation(this.editionDataService);
-                Edition edition = new Edition
-                {
-                    Id = 10,
-                    Name = "name",
-                    Book = this.editions.First().Book,
-                    CanBorrow = 10,
-                    CanNotBorrow = 5,
-                    PageCount = 244,
-                    Publisher = this.editions.First().Publisher,
-                    Type = BookType.CaseWrapHardcover
-                };
+                Edition edition = new Edition { Id = 10, Name = "name", Book = this.editions.First().Book, CanBorrow = 10, CanNotBorrow = 5, PageCount = 244, Publisher = this.editions.First().Publisher, Type = BookType.CaseWrapHardcover, };
 
                 // Act
                 servicesImplementation.AddEdition(edition);
@@ -265,7 +255,7 @@ namespace TestServiceLayer
                     CanNotBorrow = 5,
                     PageCount = 244,
                     Publisher = this.editions.First().Publisher,
-                    Type = BookType.CaseWrapHardcover
+                    Type = BookType.CaseWrapHardcover,
                 };
                 this.editions.Clear();
 
@@ -363,7 +353,7 @@ namespace TestServiceLayer
                         throw new Exception("Edition not found");
                     }
 
-                    editions[index] = editionParameter;
+                    this.editions[index] = editionParameter;
                 });
             }
 
@@ -380,7 +370,7 @@ namespace TestServiceLayer
                     CanNotBorrow = this.editions.First().CanNotBorrow + 5,
                     PageCount = this.editions.First().PageCount,
                     Publisher = this.editions.First().Publisher,
-                    Type = this.editions.First().Type
+                    Type = this.editions.First().Type,
                 };
 
                 // Act
@@ -408,7 +398,7 @@ namespace TestServiceLayer
                         throw new Exception("Edition not found");
                     }
 
-                    editions[index] = editionParameter;
+                    this.editions[index] = editionParameter;
                 });
             }
 
@@ -425,7 +415,7 @@ namespace TestServiceLayer
                     CanNotBorrow = this.editions.First().CanNotBorrow + 5,
                     PageCount = this.editions.First().PageCount,
                     Publisher = this.editions.First().Publisher,
-                    Type = this.editions.First().Type
+                    Type = this.editions.First().Type,
                 };
 
                 // Assert and Act

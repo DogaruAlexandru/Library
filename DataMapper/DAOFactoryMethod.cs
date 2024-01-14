@@ -21,7 +21,7 @@ namespace DataMapper
         private static readonly IDAOFactory ThisCurrentDAOFactory;
 
         /// <summary>
-        /// Initializes static members of the <see cref="DAOFactoryMethod" /> class DataMapper.
+        /// Initializes static members of the <see cref="DAOFactoryMethod"/> class.
         /// </summary>
         static DAOFactoryMethod()
         {

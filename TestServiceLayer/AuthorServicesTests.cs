@@ -52,7 +52,7 @@ namespace TestServiceLayer
             {
                 new Author { Id = 0, Name = "name1" },
                 new Author { Id = 1, Name = "name2" },
-                new Author { Id = 2, Name = "name3" }
+                new Author { Id = 2, Name = "name3" },
             };
         }
 
@@ -343,7 +343,7 @@ namespace TestServiceLayer
                         throw new Exception("Author not found");
                     }
 
-                    authors[index] = authorParameter;
+                    this.authors[index] = authorParameter;
                 });
             }
 
@@ -378,7 +378,7 @@ namespace TestServiceLayer
                         throw new Exception("Author not found");
                     }
 
-                    authors[index] = authorParameter;
+                    this.authors[index] = authorParameter;
                 });
             }
 

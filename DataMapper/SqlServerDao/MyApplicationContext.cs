@@ -17,7 +17,8 @@ namespace DataMapper.SqlServerDao
         /// <summary>
         /// Initializes a new instance of the <see cref="MyApplicationContext"/> class.
         /// </summary>
-        public MyApplicationContext() : base("myConStr")
+        public MyApplicationContext()
+            : base("myConStr")
         {
         }
 

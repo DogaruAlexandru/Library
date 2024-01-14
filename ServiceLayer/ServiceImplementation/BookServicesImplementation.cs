@@ -123,7 +123,7 @@ namespace ServiceLayer.ServiceImplementation
         /// <param name="book">The book to be validated.</param>
         private void VerifyLessBookDomainsThenMax(Book book)
         {
-            int maxDomainCount = Convert.ToInt32(GetValueFromConfig<string>("DOMENII"));
+            int maxDomainCount = Convert.ToInt32(this.GetValueFromConfig<string>("DOMENII"));
             if (book.BookDomains.Count() > maxDomainCount)
             {
                 throw new ValidationException($"A Book cannot have more than {maxDomainCount} BookDomains");

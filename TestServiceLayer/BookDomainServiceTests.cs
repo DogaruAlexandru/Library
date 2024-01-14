@@ -52,7 +52,7 @@ namespace TestServiceLayer
             {
                 new BookDomain { Id = 0, Name = "name1" },
                 new BookDomain { Id = 1, Name = "name2" },
-                new BookDomain { Id = 2, Name = "name3" }
+                new BookDomain { Id = 2, Name = "name3" },
             };
             this.bookDomains[2].ParentDomain = this.bookDomains[0];
         }
@@ -118,7 +118,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 });
             }
 
@@ -150,7 +150,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 });
             }
 
@@ -180,7 +180,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 });
             }
 
@@ -344,7 +344,7 @@ namespace TestServiceLayer
                         throw new Exception("BookDomain not found");
                     }
 
-                    bookDomains[index] = authorParameter;
+                    this.bookDomains[index] = authorParameter;
                 });
             }
 
@@ -379,7 +379,7 @@ namespace TestServiceLayer
                         throw new Exception("BookDomain not found");
                     }
 
-                    bookDomains[index] = authorParameter;
+                    this.bookDomains[index] = authorParameter;
                 });
             }
 

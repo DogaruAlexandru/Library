@@ -689,7 +689,7 @@ namespace TestDomainModel
                 Publisher = "ValidPublisher",
                 CanNotBorrow = 5,
                 CanBorrow = 10,
-                Book = new Book()
+                Book = new Book(),
             };
 
             // Act
@@ -716,7 +716,7 @@ namespace TestDomainModel
                 Publisher = "ValidPublisher",
                 CanNotBorrow = 5,
                 CanBorrow = 10,
-                Book = new Book()
+                Book = new Book(),
             };
 
             // Act

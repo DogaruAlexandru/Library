@@ -43,7 +43,7 @@ namespace TestDomainModel
             // Arrange
             var validPerson = new Person
             {
-                CNP = "1234567890123" // A valid CNP
+                CNP = "1234567890123", // A valid CNP
             };
 
             // Act
@@ -63,7 +63,7 @@ namespace TestDomainModel
             // Arrange
             var invalidPerson = new Person
             {
-                CNP = "InvalidCNP" // An invalid CNP
+                CNP = "InvalidCNP", // An invalid CNP
             };
 
             // Act
@@ -83,7 +83,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                CNP = "12345678901AB" // CNP with non-numeric characters
+                CNP = "12345678901AB", // CNP with non-numeric characters
             };
 
             // Act
@@ -103,7 +103,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                CNP = " 1234567890123 " // CNP with extra spaces
+                CNP = " 1234567890123 ", // CNP with extra spaces
             };
 
             // Act
@@ -123,7 +123,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                CNP = string.Empty
+                CNP = string.Empty,
             };
 
             // Act
@@ -143,7 +143,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                CNP = "123456789012" // CNP with 12 digits
+                CNP = "123456789012", // CNP with 12 digits
             };
 
             // Act
@@ -163,7 +163,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                CNP = "123456789012345" // CNP with 15 digits
+                CNP = "123456789012345", // CNP with 15 digits
             };
 
             // Act
@@ -183,7 +183,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                FirstName = "John" // Set a valid first name
+                FirstName = "John", // Set a valid first name
             };
 
             // Act
@@ -203,7 +203,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                FirstName = null // Set a null first name
+                FirstName = null, // Set a null first name
             };
 
             // Act
@@ -223,7 +223,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                FirstName = string.Empty // Set an empty first name
+                FirstName = string.Empty, // Set an empty first name
             };
 
             // Act
@@ -243,7 +243,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                FirstName = new string('A', 101) // Set a first name exceeding the maximum length
+                FirstName = new string('A', 101), // Set a first name exceeding the maximum length
             };
 
             // Act
@@ -263,7 +263,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                LastName = "Doe" // Set a valid last name
+                LastName = "Doe", // Set a valid last name
             };
 
             // Act
@@ -283,7 +283,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                LastName = null // Set a null last name
+                LastName = null, // Set a null last name
             };
 
             // Act
@@ -303,7 +303,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                LastName = string.Empty // Set an empty last name
+                LastName = string.Empty, // Set an empty last name
             };
 
             // Act
@@ -323,7 +323,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                LastName = new string('D', 101) // Set a last name exceeding the maximum length
+                LastName = new string('D', 101), // Set a last name exceeding the maximum length
             };
 
             // Act
@@ -343,7 +343,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                EmailAddress = "john.doe@example.com" // Set a valid email address
+                EmailAddress = "john.doe@example.com", // Set a valid email address
             };
 
             // Act
@@ -363,7 +363,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                EmailAddress = null // Set a null email address
+                EmailAddress = null, // Set a null email address
             };
 
             // Act
@@ -383,7 +383,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                EmailAddress = string.Empty // Set an empty email address
+                EmailAddress = string.Empty, // Set an empty email address
             };
 
             // Act
@@ -403,7 +403,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                EmailAddress = "invalid-email" // Set an invalid email address
+                EmailAddress = "invalid-email", // Set an invalid email address
             };
 
             // Act
@@ -423,7 +423,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                EmailAddress = new string('a', 101) + "@example.com" // Set an email address exceeding the maximum length
+                EmailAddress = new string('a', 101) + "@example.com", // Set an email address exceeding the maximum length
             };
 
             // Act
@@ -443,7 +443,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                PhoneNumber = "123-456-7890" // Set a valid phone number
+                PhoneNumber = "123-456-7890", // Set a valid phone number
             };
 
             // Act
@@ -463,7 +463,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                PhoneNumber = null // Set a null phone number
+                PhoneNumber = null, // Set a null phone number
             };
 
             // Act
@@ -483,7 +483,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                PhoneNumber = string.Empty // Set an empty phone number
+                PhoneNumber = string.Empty, // Set an empty phone number
             };
 
             // Act
@@ -503,7 +503,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                PhoneNumber = "invalid-phone" // Set an invalid phone number
+                PhoneNumber = "invalid-phone", // Set an invalid phone number
             };
 
             // Act
@@ -523,7 +523,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                PhoneNumber = new string('1', 21) // Set a phone number exceeding the maximum length
+                PhoneNumber = new string('1', 21), // Set a phone number exceeding the maximum length
             };
 
             // Act
@@ -543,7 +543,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                Address = "123 Main St, City, Country" // Set a valid address
+                Address = "123 Main St, City, Country", // Set a valid address
             };
 
             // Act
@@ -563,7 +563,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                Address = null // Set a null address
+                Address = null, // Set a null address
             };
 
             // Act
@@ -583,7 +583,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                Address = string.Empty // Set an empty address
+                Address = string.Empty, // Set an empty address
             };
 
             // Act
@@ -603,7 +603,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                Address = "Short" // Set a short address
+                Address = "Short", // Set a short address
             };
 
             // Act
@@ -623,7 +623,7 @@ namespace TestDomainModel
             // Arrange
             var person = new Person
             {
-                Address = new string('A', 201) // Set an address exceeding the maximum length
+                Address = new string('A', 201), // Set an address exceeding the maximum length
             };
 
             // Act
@@ -786,7 +786,7 @@ namespace TestDomainModel
                 FirstName = "John",
                 LastName = "Doe",
                 Address = "123 Main St, City, Country", // Set a valid address
-                Type = PersonType.Reader
+                Type = PersonType.Reader,
             };
 
             // Act
@@ -811,7 +811,7 @@ namespace TestDomainModel
                 FirstName = "John",
                 LastName = "Doe",
                 Address = null, // Set a null address
-                Type = PersonType.Reader
+                Type = PersonType.Reader,
             };
 
             // Act

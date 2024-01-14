@@ -509,10 +509,6 @@ namespace TestServiceLayer
             Assert.AreEqual(1, result);
         }
 
-        #region Test_Validations
-
-        #region Test_MultipleBorrow_Validations
-
         /// <summary>
         /// Verifies that a person cannot borrow more than a specified number of books at once.
         /// </summary>
@@ -526,7 +522,7 @@ namespace TestServiceLayer
                 new BorrowedBook { Id = 10, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.reader, StaffId = this.reader.Id, Edition = this.edition, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) },
                 new BorrowedBook { Id = 11, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.reader, StaffId = this.reader.Id, Edition = this.edition, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) },
                 new BorrowedBook { Id = 12, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.reader, StaffId = this.reader.Id, Edition = this.edition, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) },
-                new BorrowedBook { Id = 13, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.reader, StaffId = this.reader.Id, Edition = this.edition, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) }
+                new BorrowedBook { Id = 13, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.reader, StaffId = this.reader.Id, Edition = this.edition, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) },
             };
 
             // Act and Assert
@@ -624,10 +620,6 @@ namespace TestServiceLayer
                 Assert.AreEqual(this.borrowedBooks[3].Id, 11);
             }
         }
-
-        #endregion
-
-        #region Add_Test_Validations
 
         /// <summary>
         /// Verifies that a borrowed book cannot be added when the staff member is of type reader, as a reader cannot borrow a book to another reader.
@@ -736,7 +728,7 @@ namespace TestServiceLayer
                 BorrowedBook borrowedBook = new BorrowedBook { Id = 10, Reader = this.reader, ReaderId = this.reader.Id, Staff = this.stuff, StaffId = this.stuff.Id, Edition = this.edition, BorrowDate = DateTime.Today, DueDate = DateTime.Today.AddDays(10) };
 
                 // Act and Assert
-                Assert.ThrowsException<ValidationException>(() => servicesImplementation.AddBorrowedBook(borrowedBook), $"The borrow domain limit in the interval has been reached for {book.BookDomains.First().Name}");
+                Assert.ThrowsException<ValidationException>(() => servicesImplementation.AddBorrowedBook(borrowedBook), $"The borrow domain limit in the interval has been reached for {this.book.BookDomains.First().Name}");
             }
         }
 
@@ -917,10 +909,6 @@ namespace TestServiceLayer
                 Assert.AreEqual(this.borrowedBooks.Count, 4);
             }
         }
-
-        #endregion
-
-        #region Update_Test_Validations
 
         /// <summary>
         /// Verifies that a staff member cannot be updated to a reader when updating a borrowed book.
@@ -1232,9 +1220,5 @@ namespace TestServiceLayer
                 Assert.AreEqual(this.borrowedBooks.Count, 3);
             }
         }
-
-        #endregion
-
-        #endregion
     }
 }

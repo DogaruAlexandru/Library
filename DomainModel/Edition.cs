@@ -53,7 +53,7 @@ namespace DomainModel
         /// <summary>
         /// Dust jacket book type.
         /// </summary>
-        DustJacket
+        DustJacket,
     }
 
     /// <summary>

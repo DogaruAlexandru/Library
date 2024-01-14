@@ -67,14 +67,14 @@ namespace TestServiceLayer
             {
                 new BookDomain { Id = 0, Name = "name1" },
                 new BookDomain { Id = 1, Name = "name2" },
-                new BookDomain { Id = 2, Name = "name3" }
+                new BookDomain { Id = 2, Name = "name3" },
             };
             this.bookDomains[2].ParentDomain = this.bookDomains[0];
             this.books = new List<Book>
             {
                 new Book { Id = 0, Title = "title1",  Authors = authorList, BookDomains = new List<BookDomain> { this.bookDomains[0] } },
                 new Book { Id = 1, Title = "title2",  Authors = authorList, BookDomains = new List<BookDomain> { this.bookDomains[1] } },
-                new Book { Id = 2, Title = "title3",  BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[2] }, Description = "description" }
+                new Book { Id = 2, Title = "title3",  BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[2] }, Description = "description" },
             };
         }
 
@@ -139,7 +139,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDataService.GetBookById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.books.FirstOrDefault(Book => Book.Id == idParameter);
+                    call.ReturnValue = this.books.FirstOrDefault(book => book.Id == idParameter);
                 });
             }
 
@@ -171,7 +171,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDataService.GetBookById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.books.FirstOrDefault(Book => Book.Id == idParameter);
+                    call.ReturnValue = this.books.FirstOrDefault(book => book.Id == idParameter);
                 });
             }
 
@@ -201,7 +201,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDataService.GetBookById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.books.FirstOrDefault(Book => Book.Id == idParameter);
+                    call.ReturnValue = this.books.FirstOrDefault(book => book.Id == idParameter);
                 });
             }
 
@@ -230,7 +230,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -266,7 +266,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -371,7 +371,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -383,7 +383,7 @@ namespace TestServiceLayer
                         throw new Exception("Book not found");
                     }
 
-                    books[index] = authorParameter;
+                    this.books[index] = authorParameter;
                 });
             }
 
@@ -412,7 +412,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -424,7 +424,7 @@ namespace TestServiceLayer
                         throw new Exception("Book not found");
                     }
 
-                    books[index] = authorParameter;
+                    this.books[index] = authorParameter;
                 });
             }
 
@@ -451,7 +451,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -484,7 +484,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.AddBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -518,7 +518,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -530,7 +530,7 @@ namespace TestServiceLayer
                         throw new Exception("Book not found");
                     }
 
-                    books[index] = authorParameter;
+                    this.books[index] = authorParameter;
                 }).Repeat.Any();
             }
 
@@ -557,7 +557,7 @@ namespace TestServiceLayer
                 Expect.Call(() => this.bookDomainDataService.GetBookDomainById(Arg<int>.Is.Anything)).WhenCalled(call =>
                 {
                     int idParameter = (int)call.Arguments[0];
-                    call.ReturnValue = this.bookDomains.FirstOrDefault(BookDomain => BookDomain.Id == idParameter);
+                    call.ReturnValue = this.bookDomains.FirstOrDefault(bookDomain => bookDomain.Id == idParameter);
                 }).Repeat.Any();
 
                 Expect.Call(() => this.bookDataService.UpdateBook(Arg<Book>.Is.Anything)).WhenCalled(call =>
@@ -569,7 +569,7 @@ namespace TestServiceLayer
                         throw new Exception("Book not found");
                     }
 
-                    books[index] = authorParameter;
+                    this.books[index] = authorParameter;
                 }).Repeat.Any();
             }
 

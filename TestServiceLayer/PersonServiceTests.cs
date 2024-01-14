@@ -342,7 +342,7 @@ namespace TestServiceLayer
                         throw new Exception("Person not found");
                     }
 
-                    persons[index] = personParameter;
+                    this.persons[index] = personParameter;
                 });
             }
 
@@ -377,7 +377,7 @@ namespace TestServiceLayer
                         throw new Exception("Person not found");
                     }
 
-                    persons[index] = personParameter;
+                    this.persons[index] = personParameter;
                 });
             }
 

@@ -70,7 +70,7 @@ namespace TestDomainModel
             // Arrange
             var author = new Author
             {
-                Name = string.Empty
+                Name = string.Empty,
             };
 
             // Act
@@ -94,7 +94,7 @@ namespace TestDomainModel
             // Arrange
             var author = new Author
             {
-                Name = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+                Name = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
             };
 
             // Act
@@ -139,7 +139,7 @@ namespace TestDomainModel
             // Arrange
             var author = new Author
             {
-                Books = null
+                Books = null,
             };
 
             // Act

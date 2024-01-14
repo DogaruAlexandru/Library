@@ -286,7 +286,7 @@ namespace TestDomainModel
                 Description = "ValidDescription",
                 Editions = new List<Edition> { new Edition { /* Set valid properties for Edition */ } },
                 BookDomains = new List<BookDomain> { new BookDomain { /* Set valid properties for BookDomain */ } },
-                Authors = new List<Author> { new Author { /* Set valid properties for Author */ } }
+                Authors = new List<Author> { new Author { /* Set valid properties for Author */ } },
             };
 
             // Act
@@ -318,7 +318,7 @@ namespace TestDomainModel
                 Description = "ValidDescription",
                 Editions = new List<Edition> { new Edition { /* Set valid properties for Edition */ } },
                 BookDomains = new List<BookDomain> { new BookDomain { /* Set valid properties for BookDomain */ } },
-                Authors = new List<Author> { new Author { /* Set valid properties for Author */ } }
+                Authors = new List<Author> { new Author { /* Set valid properties for Author */ } },
             };
 
             // Act

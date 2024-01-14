@@ -236,7 +236,7 @@ namespace TestDomainModel
                 Id = 1,
                 Name = "ValidBookDomain",
                 ParentDomain = null, // Set a valid null parent domain
-                Books = new List<Book> { new Book(), new Book { Title = "Title" }, new Book() }
+                Books = new List<Book> { new Book(), new Book { Title = "Title" }, new Book() },
             };
 
             // Act
@@ -264,7 +264,7 @@ namespace TestDomainModel
                 Id = 1,
                 //// Name is missing, intentionally causing failure
                 ParentDomain = null, // Set a valid null parent domain
-                Books = new List<Book> { new Book(), new Book { Title = "Title" }, new Book() }
+                Books = new List<Book> { new Book(), new Book { Title = "Title" }, new Book() },
             };
 
             // Act
