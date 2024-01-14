@@ -499,7 +499,7 @@ namespace TestServiceLayer
                 // Arrange
                 BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
                 Book book = new Book { Id = 10, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[1], new BookDomain { Id = 4, Name = "asd" }, new BookDomain { Id = 5, Name = "asdewe" } } };
-                int maxDomainCount = Convert.ToInt32(ConfigurationManager.AppSettings["DOMENII"]);
+                int maxDomainCount = Convert.ToInt32(servicesImplementation.GetValueFromConfig<string>("DOMENII"));
 
                 // Act and Assert
                 Assert.ThrowsException<ValidationException>(() => servicesImplementation.AddBook(book), $"A Book cannot have more than {maxDomainCount} BookDomains");
@@ -578,7 +578,7 @@ namespace TestServiceLayer
                 // Arrange
                 BookServicesImplementation servicesImplementation = new BookServicesImplementation(this.bookDataService, this.bookDomainDataService);
                 Book book = new Book { Id = 1, Title = "title", BookDomains = new List<BookDomain> { this.bookDomains[0], this.bookDomains[1], new BookDomain { Id = 4, Name = "asd" }, new BookDomain { Id = 5, Name = "asdewe" } } };
-                int maxDomainCount = Convert.ToInt32(ConfigurationManager.AppSettings["DOMENII"]);
+                int maxDomainCount = Convert.ToInt32(servicesImplementation.GetValueFromConfig<string>("DOMENII"));
 
                 // Act and Assert
                 Assert.ThrowsException<ValidationException>(() => servicesImplementation.UpdateBook(book), $"A Book cannot have more than {maxDomainCount} BookDomains");

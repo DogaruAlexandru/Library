@@ -9,7 +9,10 @@ namespace ServiceLayer.ServiceImplementation
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.IO;
+    using DomainModel;
     using log4net;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Represents a base service class providing common functionality for service implementations.
@@ -38,6 +41,20 @@ namespace ServiceLayer.ServiceImplementation
             {
                 throw new ValidationException(validationResults[0].ErrorMessage);
             }
+        }
+
+        /// <summary>
+        /// Reads a configuration file and retrieves the value associated with the specified field name.
+        /// </summary>
+        /// <typeparam name="T">The type of the value to retrieve.</typeparam>
+        /// <param name="fieldName">The name of the field whose value is to be retrieved.</param>
+        /// <returns>The value associated with the specified field name.</returns>
+        public T GetValueFromConfig<T>(string fieldName)
+        {
+            string jsonFilePath = "D:\\School\\Sem1\\ASSE\\Tema\\Library\\Library\\config.json";
+            string jsonData = File.ReadAllText(jsonFilePath);
+            dynamic configData = JsonConvert.DeserializeObject(jsonData);
+            return configData[fieldName].ToObject<T>();
         }
     }
 }
