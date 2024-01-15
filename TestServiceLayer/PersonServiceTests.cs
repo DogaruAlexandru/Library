@@ -57,24 +57,6 @@ namespace TestServiceLayer
         }
 
         /// <summary>
-        /// Unit test for the GetAllBookDomains method of the PersonServiceImplementation class,
-        /// validating the retrieval of all persons from a database.
-        /// </summary>
-        [TestMethod]
-        public void TestGetAllPersonsFromDB()
-        {
-            // Arrange
-            PersonServiceImplementation servicesImplementation = new PersonServiceImplementation(new SQLPersonDataService());
-
-            // Act
-            var list = servicesImplementation.GetAllPersons();
-
-            // Assert
-            Assert.AreEqual(list.Count, 5);
-            Assert.AreEqual(list[1].FirstName, "Alice");
-        }
-
-        /// <summary>
         /// Tests the <see cref="PersonServiceImplementation.GetAllPersons"/> method when there are items.
         /// </summary>
         [TestMethod]

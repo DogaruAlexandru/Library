@@ -16,7 +16,7 @@ namespace DataMapper
     /// <summary>
     /// Represents the SQL implementation of the data service for the Author entity.
     /// </summary>
-    public class SQLAuthorDataService : IAuthorDataService
+    internal class SQLAuthorDataService : IAuthorDataService
     {
         /// <summary>
         /// Adds a new author to the database.

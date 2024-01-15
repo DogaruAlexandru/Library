@@ -16,7 +16,7 @@ namespace DataMapper
     /// <summary>
     /// Implementation of <see cref="IEditionDataService"/> for SQL Server data storage.
     /// </summary>
-    public class SQLEditionDataService : IEditionDataService
+    internal class SQLEditionDataService : IEditionDataService
     {
         /// <summary>
         /// Adds a new edition to the data store.

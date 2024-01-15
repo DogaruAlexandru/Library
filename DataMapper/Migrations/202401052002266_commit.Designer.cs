@@ -7,9 +7,9 @@ namespace DataMapper.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Commit : IMigrationMetadata
+    public sealed partial class commit : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Commit));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(commit));
         
         string IMigrationMetadata.Id
         {

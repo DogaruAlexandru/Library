@@ -58,24 +58,6 @@ namespace TestServiceLayer
         }
 
         /// <summary>
-        /// Unit test for the GetAllBookDomains method of the BookDomainServicesImplementation class,
-        /// validating the retrieval of all bookDomains from a database.
-        /// </summary>
-        [TestMethod]
-        public void TestGetAllBookDomainsFromDB()
-        {
-            // Arrange
-            BookDomainServicesImplementation servicesImplementation = new BookDomainServicesImplementation(new SQLBookDomainDataService());
-
-            // Act
-            var list = servicesImplementation.GetAllBookDomains();
-
-            // Assert
-            Assert.AreEqual(list.Count, 14);
-            Assert.AreEqual(list[1].Name, "Matematica");
-        }
-
-        /// <summary>
         /// Tests the <see cref="BookDomainServicesImplementation.GetAllBookDomains"/> method when there are items.
         /// </summary>
         [TestMethod]
