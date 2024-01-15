@@ -11,7 +11,7 @@ namespace DataMapper
     /// <summary>
     /// Represents the SQL Server implementation of the Data Access Object (DAO) Factory.
     /// </summary>
-    internal class SQLServerDAOFactory : IDAOFactory
+    public class SQLServerDAOFactory : IDAOFactory
     {
         /// <summary>
         /// Gets the data service for Author entities.

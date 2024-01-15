@@ -16,7 +16,7 @@ namespace DataMapper
     /// <summary>
     /// Represents the SQL implementation of the data service for the BorrowedBook entity.
     /// </summary>
-    internal class SQLBorrowedBookDataService : IBorrowedBookDataService
+    public class SQLBorrowedBookDataService : IBorrowedBookDataService
     {
         /// <summary>
         /// Adds a new borrowed book to the database.
