@@ -16,7 +16,7 @@ namespace DataMapper
     /// <summary>
     /// Provides an implementation of the <see cref="IPersonDataService"/> for SQL Server data storage.
     /// </summary>
-    internal class SQLPersonDataService : IPersonDataService
+    public class SQLPersonDataService : IPersonDataService
     {
         /// <inheritdoc/>
         public void AddPerson(Person person)

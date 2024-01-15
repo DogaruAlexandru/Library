@@ -16,7 +16,7 @@ namespace DataMapper
     /// <summary>
     /// Represents the SQL implementation of the data service for the BookDomain entity.
     /// </summary>
-    internal class SQLBookDomainDataService : IBookDomainDataService
+    public class SQLBookDomainDataService : IBookDomainDataService
     {
         /// <summary>
         /// Adds a new book domain to the database.

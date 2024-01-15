@@ -57,6 +57,24 @@ namespace TestServiceLayer
         }
 
         /// <summary>
+        /// Unit test for the GetAllAuthors method of the AuthorServicesImplementation class,
+        /// validating the retrieval of all authors from a database.
+        /// </summary>
+        [TestMethod]
+        public void TestGetAllAuthorsFromDB()
+        {
+            // Arrange
+            AuthorServicesImplementation servicesImplementation = new AuthorServicesImplementation(new SQLAuthorDataService());
+
+            // Act
+            var list = servicesImplementation.GetAllAuthors();
+
+            // Assert
+            Assert.AreEqual(list.Count, 8);
+            Assert.AreEqual(list[6].Name, "SIU");
+        }
+
+        /// <summary>
         /// Tests the <see cref="AuthorServicesImplementation.GetAllAuthors"/> method when there are items.
         /// </summary>
         [TestMethod]
